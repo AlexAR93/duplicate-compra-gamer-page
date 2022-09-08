@@ -1,0 +1,21 @@
+* {
+    @include normalizePM;
+    box-sizing: border-box;
+    body{
+        font-family: 'Montserrat', sans-serif;
+        a {
+            text-decoration: none;
+            color: inherit
+        }
+        ul{
+            @include normalizePM;
+            list-style: none;
+        }
+        img {
+            border-style: none;
+        }
+        h1,h2,h3,h4,h5,h6,p{
+            @include normalizePM;
+        }
+    }
+}

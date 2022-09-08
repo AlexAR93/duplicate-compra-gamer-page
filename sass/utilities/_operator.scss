@@ -1,0 +1,17 @@
+@mixin flex($direction, $align, $justify){
+    display: flex;
+    flex-direction: $direction;
+    align-items: $align;
+    justify-content: $justify;
+}
+
+@mixin normalizePM{
+    margin: 0;
+    padding: 0;
+}
+
+@mixin button-fixed{
+    position: fixed;
+    bottom: 30px;
+    width: fit-content;
+}

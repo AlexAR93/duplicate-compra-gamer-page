@@ -1,0 +1,124 @@
+.header{
+    @include flex(column,center,center);
+    padding-top: 10px;
+    &__log{
+        margin-bottom: 3px
+    }
+
+    &__search{
+        input{
+            width: 335px;
+            height: 55px;
+            outline: none;
+            border: 1px solid #0000001f;
+            border-radius: 4px;
+            padding-left: 10px;
+            letter-spacing: .5px;
+            font-size: .9rem;
+            transition: all .3s;
+        }
+        input:hover{
+            border: 2px solid #000;
+        }
+        input:focus{
+            border: 2px solid #fd611a;
+        }
+    }
+
+    &__user{
+        @include flex(row,center,center);
+        gap: 30px;
+        padding: 8px 0 0 0;
+        button{
+            border: none;
+            background: #fd611a;
+            color: #fff;
+            height: 36px;
+            width: 173.95px;
+            border-radius: 4px;
+            box-shadow: 0 3px 1px -2px rgb(0 0 0 / 20%), 0 2px 2px 0 rgb(0 0 0 / 14%), 0 1px 5px 0 rgb(0 0 0 / 12%);
+            font-size: 14px;
+            text-transform: uppercase;
+            font-weight: 500;
+            cursor: pointer;
+            span{
+                margin: 0 5px 0 0;
+                background: #fff;
+                border-radius: 100%;
+                padding: 4px 6px;
+                i{
+                    color: #fd611a;
+                }
+            }
+        }
+        button:active{
+            box-shadow: 0 5px 5px -3px rgb(0 0 0 / 20%), 0 8px 10px 1px rgb(0 0 0 / 14%), 0 3px 14px 2px rgb(0 0 0 / 12%);;
+            transition: box-shadow .5s;
+        }
+        .cart{
+            font-size: 20px;
+            height: 58px;
+            cursor: pointer;
+            #counter-cart{
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                background: #f44336;
+                color: #fff;
+                position: relative;
+                font-size: 12px;
+                left: 16px;
+                top: 8px;
+                text-align: center;
+                font-weight: 500;
+                p{
+                    padding-top: 2px;
+                }
+            }
+        }
+    }
+    .nav{
+        background: #fd611a;
+        height: 56px;
+        width: 100%;
+        @include flex(column,start,center);
+        &__button{
+            padding: 0 16px;
+            font-size: 24px;
+            color: #fff;
+            cursor: pointer;
+        }
+        &__links{
+            // display: none;
+            width: inherit;
+            background: #fd611a;
+            position: absolute;
+            top: 261px;
+            padding: 0 42px;
+            text-transform: uppercase;
+            font-size: 13.2px;
+            font-weight: 600;
+            line-height: 33px;
+
+            display: none;
+            li{
+                width: fit-content;
+                cursor: pointer;
+                a:hover{
+                    color: #fff;
+                }
+                i{
+                    padding-left: 5px;
+                    font-size: 13px;
+                }
+                ul{
+                    display: none;
+                }
+            }
+        }
+        .show-nav{
+            display: inline-block;
+            z-index: 1000;
+        }
+    }
+}

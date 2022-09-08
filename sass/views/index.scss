@@ -1,0 +1,37 @@
+
+.main{
+    .slider{
+        width: 100%;
+        overflow: hidden;
+        &__container{
+            width: 100%;
+            display: flex;
+
+            .slider__img{
+                min-width: 100%;
+
+                img{
+                    min-width: 100%;
+                }
+            }
+
+        }
+        #slick-dots{
+            @include flex(row,start,center);
+            gap: 1.2rem;
+            a{
+                button{
+                background: #FFD8C6;
+                padding: 5px;
+                border: none;
+                border-radius: 50%;
+                cursor: pointer;
+                }
+                .btnActive{
+                    background: #FD611A;
+                }
+            }
+        }
+
+    }
+}
