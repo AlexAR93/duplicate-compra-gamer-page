@@ -1,4 +1,4 @@
-import SliderInterval from "./_SliderInterval.js";
+import SliderInterval from "./SliderInterval.js";
 const divContainer=document.getElementById('slider__container')
 
 export default function sliderFunction(){
