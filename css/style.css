@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  scroll-behavior: smooth;
 }
 * body {
   font-family: "Montserrat", sans-serif;
@@ -181,6 +182,57 @@
 }
 .main .slider #slick-dots a .btnActive {
   background: #FD611A;
+}
+.main .latest-new-products {
+  display: grid;
+  grid-template-areas: "tittle tittle tittle" "back products next";
+  grid-template-columns: 5% 50% 5%;
+  justify-content: center;
+  text-transform: uppercase;
+  align-items: center;
+  padding-bottom: 5rem;
+}
+.main .latest-new-products h2 {
+  grid-area: tittle;
+  padding-top: 1.5rem;
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.8rem;
+}
+.main .latest-new-products__container {
+  grid-area: products;
+  overflow: hidden;
+}
+.main .latest-new-products__slider {
+  transition: all 0.5s;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: start;
+  padding: 1rem 1rem;
+  gap: 2rem;
+}
+.main .latest-new-products__slider article {
+  min-width: 80%;
+  height: 302px;
+  text-align: center;
+  border: 0.5px solid rgba(216, 216, 216, 0.244);
+  box-shadow: -2px 2px 4px 0.2px #979797;
+  border-radius: 5px;
+}
+.main .latest-new-products button {
+  border: none;
+  background: #FD611A;
+  padding: 12px 15px;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+.main .latest-new-products #back {
+  grid-area: back;
+}
+.main .latest-new-products #next {
+  grid-area: next;
 }
 
 /*# sourceMappingURL=style.css.map */

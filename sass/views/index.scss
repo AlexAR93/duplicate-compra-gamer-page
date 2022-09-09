@@ -34,4 +34,67 @@
         }
 
     }
+
+
+    .latest-new-products{
+        display: grid;
+        grid-template-areas: 'tittle tittle tittle'
+                            'back products next'
+                            
+        ;
+        grid-template-columns: 5% 50% 5%;
+        justify-content: center;
+        text-transform: uppercase;
+        align-items: center;
+        padding-bottom: 5rem;
+        h2{
+            grid-area: tittle;
+            padding-top: 1.5rem;
+            padding-bottom: .5rem;
+            margin-bottom: .8rem;
+        }
+
+        &__container{
+            grid-area: products;
+
+            overflow: hidden;
+           
+        }
+        &__slider{
+            transition: all .5s;
+            @include flex(row,center,start);
+            padding: 1rem 1rem;
+            gap: 2rem;
+            article{
+                min-width: 80%;
+      
+                height: 302px;
+                text-align: center;
+                border: .5px solid rgba(216, 216, 216, 0.244);
+                box-shadow: -2px 2px 4px .2px #979797;
+                border-radius: 5px;
+
+            }
+            
+
+        }
+
+        button{
+            border: none;
+            background: #FD611A;
+            padding: 12px 15px;
+            border-radius: 50%;
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        #back{
+            grid-area: back;
+
+        }
+        #next{
+            grid-area: next;
+        }
+    }
 }
