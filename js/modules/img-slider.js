@@ -89,6 +89,36 @@ export let latestNews=[
         price:59750,
         url:'./assets/images/latest-new5.jpg',
         alt:'product5',
+    },
+    {
+        product:'Mother ASUS Prime Z690-P WIFI S1700',
+        price:59750,
+        url:'./assets/images/latest-new5.jpg',
+        alt:'product5',
+    },
+    {
+        product:'Mother ASUS Prime Z690-P WIFI S1700',
+        price:59750,
+        url:'./assets/images/latest-new5.jpg',
+        alt:'product5',
+    },
+    {
+        product:'Mother ASUS Prime Z690-P WIFI S1700',
+        price:59750,
+        url:'./assets/images/latest-new5.jpg',
+        alt:'product5',
+    },
+    {
+        product:'Mother ASUS Prime Z690-P WIFI S1700',
+        price:59750,
+        url:'./assets/images/latest-new5.jpg',
+        alt:'product5',
+    },
+    {
+        product:'Mother ASUS Prime Z690-P WIFI S1700',
+        price:59750,
+        url:'./assets/images/latest-new5.jpg',
+        alt:'product5',
     }
 ]
 

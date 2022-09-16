@@ -184,55 +184,46 @@
   background: #FD611A;
 }
 .main .latest-new-products {
-  display: grid;
-  grid-template-areas: "tittle tittle tittle" "back products next";
-  grid-template-columns: 5% 50% 5%;
-  justify-content: center;
-  text-transform: uppercase;
-  align-items: center;
-  padding-bottom: 5rem;
-}
-.main .latest-new-products h2 {
-  grid-area: tittle;
-  padding-top: 1.5rem;
-  padding-bottom: 0.5rem;
-  margin-bottom: 0.8rem;
-}
-.main .latest-new-products__container {
-  grid-area: products;
   overflow: hidden;
+  padding: 15px;
 }
-.main .latest-new-products__slider {
-  transition: all 0.5s;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: start;
-  padding: 1rem 1rem;
-  gap: 2rem;
+.main .latest-new-products__tittle {
+  color: #4E4D4D;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-family: "Rajdhani", sans-serif;
+  font-size: 27px;
+  padding: 3px 0 20px 0;
 }
-.main .latest-new-products__slider article {
-  min-width: 80%;
-  height: 302px;
+.main .latest-new-products__tittle::after {
+  content: " ";
+  display: block;
+  width: 100%;
+  border-bottom: 2.5px #4E4D4D solid;
+}
+.main .latest-new-products .swiper-container .swiper-wrapper .swiper-slide {
   text-align: center;
-  border: 0.5px solid rgba(216, 216, 216, 0.244);
-  box-shadow: -2px 2px 4px 0.2px #979797;
-  border-radius: 5px;
+  border-radius: 6px;
+  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2), 0 3px 1px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.14);
+  height: 302px;
 }
-.main .latest-new-products button {
-  border: none;
-  background: #FD611A;
-  padding: 12px 15px;
-  border-radius: 50%;
-  color: #fff;
-  font-size: 1.5rem;
-  cursor: pointer;
+.main .latest-new-products .swiper-container .swiper-wrapper .swiper-slide article {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 40px 0;
 }
-.main .latest-new-products #back {
-  grid-area: back;
+.main .latest-new-products .swiper-container .swiper-wrapper .swiper-slide article h2 {
+  font-size: 14px;
+  font-weight: 600;
 }
-.main .latest-new-products #next {
-  grid-area: next;
+.main .latest-new-products .swiper-container .swiper-button-next {
+  display: none;
+}
+.main .latest-new-products .swiper-container .swiper-button-prev {
+  display: none;
 }
 
 /*# sourceMappingURL=style.css.map */

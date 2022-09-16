@@ -1,7 +1,7 @@
 import { latestNews } from './img-slider.js';
-import sliderLNFunction from './slider-ln-function.js';
 
-const divContainer=document.querySelector('.latest-new-products__slider');
+
+const divContainer=document.getElementById('latest-new-products__slider');
 const btnBack=document.getElementById('back');
 const btnNext=document.getElementById('next');
 
@@ -9,8 +9,8 @@ export default function sliderLatestNew(){
     latestNews.forEach((products,i) => {
 
 
-        
-        let divContent=document.createElement('article');
+        let divContent=document.createElement('div');
+        let article=document.createElement('article');
         let img=document.createElement('img');
         let tittle=document.createElement('h2');
         let p=document.createElement('p');
@@ -18,24 +18,24 @@ export default function sliderLatestNew(){
 
 
 
-        divContent.setAttribute('id',`latest-new${i}`);
+        article.setAttribute('id',`latest-new${i}`);
         tittle.innerHTML=products.product;
     
-        img.setAttribute('src',products.url)
+        img.setAttribute('src',products.url);
         img.setAttribute('alt',products.alt);
      
         p.innerHTML=products.price;
 
-        divContent.appendChild(img);
-        divContent.appendChild(tittle);
-        divContent.appendChild(p);
- 
-
+        article.appendChild(img);
+        article.appendChild(tittle);
+        article.appendChild(p);
+        divContent.appendChild(article)
+        divContent.classList.add('swiper-slide')
         divContainer.appendChild(divContent)
+        
 
-        console.log(divContent,innerWidth)
 
-        sliderLNFunction(i,divContainer,btnBack,btnNext)
+
 
 
     });
