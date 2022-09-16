@@ -1,0 +1,29 @@
+.footer{
+    .container{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        padding: 1rem 0;
+        line-height: 1;
+        column-gap: 1px;
+        height: 341px;
+        color: #fff;
+        div{
+            background: #FD611A;
+            text-align: center;
+            padding: 20px;
+            @include flex(column, center,center);
+        }
+        
+    }
+    &__data-fiscal{
+        img{
+            width:87.7px;
+            height: 120px;
+        }
+    }
+    &__info{
+        font-size: 12px;
+        text-align: center;
+        padding: 0 2rem 12px 0;
+    }
+}
