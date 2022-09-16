@@ -152,6 +152,14 @@
   z-index: 1000;
 }
 
+.brands-slider {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: start;
+  overflow: hidden;
+}
+
 .footer .container {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -285,7 +293,7 @@
 }
 .main .latest-new-products {
   overflow: hidden;
-  padding: 15px;
+  padding: 15px 15px 70px 15px;
 }
 .main .latest-new-products__tittle {
   color: #4E4D4D;

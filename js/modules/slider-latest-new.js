@@ -2,8 +2,7 @@ import { latestNews } from './img-slider.js';
 
 
 const divContainer=document.getElementById('latest-new-products__slider');
-const btnBack=document.getElementById('back');
-const btnNext=document.getElementById('next');
+
 
 export default function sliderLatestNew(){
     latestNews.forEach((products,i) => {
