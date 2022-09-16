@@ -155,20 +155,33 @@
 .footer .container {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  padding: 1rem 0;
+  padding: 1rem 0 0 0;
   line-height: 1;
   column-gap: 1px;
   height: 341px;
   color: #fff;
 }
-.footer .container div {
+.footer__section {
   background: #FD611A;
   text-align: center;
-  padding: 20px;
+  padding: 0 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+.footer__section button {
+  border: 1px solid #fff;
+  background: none;
+  border-radius: 5px;
+  color: #fff;
+}
+.footer__section button:hover {
+  background: #fff;
+  color: #FD611A;
+}
+.footer__data-fiscal {
+  padding-bottom: 0 !important;
 }
 .footer__data-fiscal img {
   width: 87.7px;
@@ -177,7 +190,66 @@
 .footer__info {
   font-size: 12px;
   text-align: center;
-  padding: 0 2rem 12px 0;
+  padding: 5px 0;
+  margin: 0 0 10px 0;
+  background: #EEEEEE;
+}
+.footer__help h3 {
+  font-size: 13px;
+  font-weight: 500;
+  padding-bottom: 0.6rem;
+}
+.footer__help p {
+  padding-bottom: 0.6rem;
+  font-weight: 100;
+  font-size: 12px;
+}
+.footer__help button {
+  text-transform: uppercase;
+  padding: 5px;
+}
+.footer__working-with-us {
+  justify-content: flex-start;
+}
+.footer__working-with-us button {
+  justify-self: flex-start;
+  padding: 5px 30px;
+  margin: 15px 0;
+}
+.footer__working-with-us a {
+  text-decoration: underline;
+}
+.footer__working-with-us a:hover {
+  text-decoration: none;
+}
+.footer__social-networks {
+  align-items: start;
+}
+.footer__social-networks h3 {
+  align-self: flex-start;
+  font-size: 13px;
+  font-weight: 500;
+  padding-bottom: 0.6rem;
+}
+.footer__social-networks div {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 1fr 1fr;
+  grid-gap: 0.5rem;
+}
+.footer__social-networks div a {
+  align-self: center;
+  background: #fff;
+  border-radius: 100%;
+  padding: 0.4rem 0.1rem;
+  color: #FC611A;
+  font-size: 1.2rem;
+}
+.footer__social-networks div .facebook {
+  padding: 0;
+  background: #FC611A;
+  color: #fff;
+  font-size: 2rem;
 }
 
 .main .slider {
