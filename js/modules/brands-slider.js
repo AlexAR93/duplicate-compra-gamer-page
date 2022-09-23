@@ -3,8 +3,7 @@
 import {brands} from './img-slider.js';
 const brandsSliderContainer=document.getElementById('brands-slider')
 
-export default function brandsSlider(){
-    brands.forEach((b,i)=>{
+export default brands.forEach((b,i)=>{
         let divContent=document.createElement('div');
         let imgChild=document.createElement('img');
    
@@ -12,4 +11,4 @@ export default function brandsSlider(){
         divContent.appendChild(imgChild);
         brandsSliderContainer.appendChild(divContent)
     })
-}
+

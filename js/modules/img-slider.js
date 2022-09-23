@@ -192,3 +192,57 @@ export let brands=[
         alt:'be-quiet',
     },
 ]
+
+
+export let products=[
+    {
+        category:'Teclado y mouses',
+        product:'Mouse ASUS ROG Gladius II Wireless RGB',
+        price:17600,
+        url:'./assets/images/latest-new1.jpg',
+        alt:'product1',
+    },
+    {
+        category:'Mothers y combos',
+        product:'Mother ASUS PRIME A520M-K AM4',
+        price:15100,
+        url:'./assets/images/latest-new2.jpg',
+        alt:'product2',
+    },
+    {
+        category:'Placas de video y otras',
+        product:'Placa Video ASUS GeForce GTX 1660 TI 6GB GDDR6 TUF EVO OC',
+        price:92450,
+        url:'./assets/images/latest-new3.jpg',
+        alt:'product3',
+    },
+    {
+        category:'Mothers y combos',
+        product:'Mother ASUS Prime B660M-A D4',
+        price:28900,
+        url:'./assets/images/latest-new4.jpg',
+        alt:'product4',
+    },
+    {
+        category:'Mothers y combos',
+        product:'Mother ASUS Prime Z690-P WIFI S1700',
+        price:59750,
+        url:'./assets/images/latest-new5.jpg',
+        alt:'product5',
+    },
+    {
+        category:'Eqipos y Notebooks',
+        product:'Notebook Gamer AORUS KD 15.6 Core I7 11800H 16GB (2X8GB) 512GB SSD NVMe RTX 3060 240Hz W11',
+        price:455500,
+        url:'./assets/images/notebook.jpg',
+        alt:'product6',
+    }
+    ,
+    {
+        category:'Eqipos y Notebooks',
+        product:'Notebook ASUS ZEPHYRUS 14 WQHD RYZEN 9 4900HS 16GB 1TB SSD NVMe RTX 2060',
+        price:465000,
+        url:'./assets/images/notebook2.jpg',
+        alt:'product7',
+    }
+]

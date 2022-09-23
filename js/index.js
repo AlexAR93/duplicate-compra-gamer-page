@@ -6,4 +6,5 @@ import brandsSlider from './modules/brands-slider.js';
 
 sliderFunction()
 latestNews()
-brandsSlider()
+
+

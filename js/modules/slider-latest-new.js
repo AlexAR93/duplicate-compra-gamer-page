@@ -17,7 +17,7 @@ export default function sliderLatestNew(){
 
 
 
-        article.setAttribute('id',`latest-new${i}`);
+        article.setAttribute('id',`product${i}`);
         tittle.innerHTML=products.product;
     
         img.setAttribute('src',products.url);

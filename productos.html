@@ -7,7 +7,6 @@
     
     <!-- CSS -->
     <link rel="stylesheet" href="./css/style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"/>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,9 +18,9 @@
 
     <title>COMPRA GAMER|Compra Gamer</title>
 </head>
-<body>
+<body class="body">
     <header class="header">
-        <a href="#" class="header__log">
+        <a href="./index.html" class="header__log">
             <img src="./assets/images/logo.png" alt="">
         </a>
         <div class="header__search">
@@ -43,7 +42,7 @@
             </div>
             <ul class="nav__links" id="nav__links">
                 <li>
-                    <a href="./productos.html">productos</a>
+                    <a href="#">productos</a>
                 </li>
                 <li>
                     <a href="">armá tu pc</a>
@@ -66,53 +65,59 @@
             </ul>
         </nav>
     </header>
-
     
     <main class="main">
-        <section class="slider">
-            <div class="slider__container" id="slider__container">
+
+        <div class="main-products">
+            <div class="sub-category-img">
+                <img src="./assets/images/sub-category-img.jpg" alt="subCategoryImg">
+            </div>
+    
+            <div class="filter">
+                <div class="filter__products">
+                    <div class="filter-btn categories" id="categories">
+                        <h3>Categorías</h3>
+                    </div>
+                    <div class="filter-btn sub-filter" id="sub-filter">
+                        <h3>Filtros</h3>
+                    </div>
+                    <div class="options options-hide" id="options">
+                        <ul>
+                            <li class="tittle-options"
+                            id="tittle-options-close">Categorias<span>X</span></li>
+                            <li class="btn">Eqipos y Notebooks</li>
+                            <li class="btn">Mothers y combos</li>
+                            <li class="btn">Placas de video y otras</li>
+                            <li class="btn">Teclado y mouses</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="filter__price">
+                    <div class="select" id="select">
+                        <p>Ordenar por<span>&#8227;</span></p>
+                    </div>
+                    <div class="select-options select-options-hide" id="select-options">
+                        <ul>
+                            <li class="select-option" value="0"><span>Todos</span></li>
+                            <li class="select-option" value="1"><span>Mayor precio</span></li>
+                            <li class="select-option" value="-1"><span>Menor precio</span></li>
+                        </ul>
+                    </div>
+                </div>
                 
-                <!-- SLIDER -->
             </div>
-            <div id="slick-dots">
-
+    
+    
+            <div class="products" id="products">
+                
             </div>
-        </section>
-
-        <!-- LatestNews slider -->
-        <section class="latest-new-products">
-
-            <h2 class="latest-new-products__tittle">Últimas novedades</h2>
-
-
-            <div class="swiper-container">
-
-                <div id="latest-new-products__slider" class="swiper-wrapper">
-                    
-                </div> 
-                <!-- Buttons -->
-                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
-
-
-
-
-            </div>
-            <!-- <button id="next">&#62;</button> -->
-
-
-            
-        </section>
-
-        <div>
-
         </div>
-        
 
         <div class="brands-slider" id="brands-slider">
 
         </div>
     </main>
+
 
     <footer class="footer">
         
@@ -150,11 +155,11 @@
 
 
 
+    <script src="./js/modules/nav.js" type="module"></script>
+    <script src="./js/modules/brands-slider.js" type="module"></script>
+    <script src="./js/modules/products.js" type="module"></script>
 
-    <script src="./js/index.js" type="module" onload ></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
-    <script src="./js/modules/swiper-responsive.js"></script>
 
 </body>
 </html>

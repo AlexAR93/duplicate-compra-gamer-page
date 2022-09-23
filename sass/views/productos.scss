@@ -1,0 +1,189 @@
+.main{
+    .main-products{
+        padding: 0 10%;
+        @include flex(column,center,start);
+        background: #EEEEEE;
+        .sub-category-img{
+            img{
+                max-width: 100%;
+            }
+        }
+    
+        .filter{
+            width: 100%;
+            @include flex(column,center,start);
+            padding-top: 10px;
+            gap: 10px 0;
+            &__products{
+                width: inherit;
+                display: grid;
+                grid-template-areas: 'category sub-filter'
+                                        'options options'
+                ;
+                grid-template-columns: 1fr 1fr;
+                grid-gap: 0 30px;
+                .filter-btn{
+                    text-align: center;
+                    padding: .5rem;
+                    cursor: pointer;
+                    border: 1px solid #ccc;
+                    border-radius: 6px;
+                    color: #FB612E;
+                    h3{
+                        font-size: .8rem;
+                        font-weight: 600;
+                        text-transform: uppercase;
+                    }
+                }
+                .categories{
+                    grid-area: category;
+                }
+                .sub-filter{
+                    grid-area: sub-filter;
+
+                }
+                .options{
+                    grid-area: options;
+                    position: relative;
+                    top: -32.8px;
+                    ul{
+                        background: #FFFFFF;
+                        li{
+                            width: 100%;
+                            cursor: pointer;
+                        }
+                        .btn{
+                            padding: 5px;
+                        }
+                        .btn:hover{
+                            background: #EEEEEE;
+                        }
+                        .tittle-options{
+                            font-weight: 700;
+                            padding: 10px 5px;
+                            @include flex(row,center,space-between);
+                            span{
+                                color: #FD611A;
+                                padding-right: 5px;
+                            }
+                        }
+                    }
+                }
+                .options-hide{
+                    display: none;
+                }
+
+            }
+            &__price{
+                width: inherit;
+                background: #FFFFFF;
+                .select{
+                    padding-left: 10px;
+                    width: 364.25px;
+                    height: 59px;
+                    @include flex(column,start,center);
+                    cursor: pointer;
+                    p{
+                        color: rgba(0,0,0,.42);
+                        width: 100%;
+                        font-size: .9rem;
+                        @include flex(row,center,space-between);
+                        span{
+                            text-align: end;
+                            font-size: 2rem;
+                            transform: rotate(90deg);
+                            color: #FD611A;
+                        }
+                    }
+                }
+                .select::after{
+                    content: ' ';
+                    display: block;
+                    width: 100%;
+                    border-bottom: 2.5px #FD611A solid;
+                }
+                .select-options{
+                    position: absolute;
+                    width: 364.25px;
+                    background: #FFFFFF;
+                    box-shadow: 0 2px 4px -1px rgb(0 0 0 / 20%), 0 4px 5px 0 rgb(0 0 0 / 14%), 0 1px 10px 0 rgb(0 0 0 / 12%);
+                    border-radius: 4px;
+                    ul{
+                        font-size: 15px;
+                        
+                        li{
+                            padding: 0 15px;
+                            height: 45px;
+                            @include flex(column,start,center);
+                        }
+                        li:hover{
+                            background: #EEEEEE;
+                            cursor: pointer;
+                        }
+                    }
+                }
+                .select-options-hide{
+                    display: none;
+                }
+
+            }
+        }
+    
+        .products{
+            @include flex(column,center,start);
+            width: 100%;
+            gap: 10px;
+            margin: 10px 0;
+            &__product{
+                width: inherit;
+                height: 302px;
+                text-align: center;
+                border-radius: 6px;
+                box-shadow: 0 1px 5px 0 rgba(0,0,0,.2),0 3px 1px 0 rgba(0,0,0,.12),0 2px 2px 0 rgba(0,0,0,.14);
+                background: #FFFFFF;
+                article{
+                    height: inherit;
+                    @include flex(column,center,center);   
+                    h2{
+                        font-size: 14px;
+                        font-weight: 600;
+                    }
+                    p{
+                        color: #4675B9;
+                    }
+                    button{
+                        border: none;
+                        background: #FD611A;
+                        color: #FFFFFF;
+                        padding: 10.5px 16px;
+                        border-radius: 6px;
+                        cursor: pointer;
+                        text-transform: uppercase;
+                        font-weight: 600;
+                    }
+                }
+            }
+            &__tag{
+                width: inherit;
+                text-align: start;
+
+                p{
+                    padding: .5rem;
+                    background: #FD611A;
+                    width: fit-content;
+                    border-radius: 20px;
+                    cursor: pointer;
+                    span{
+                        font-size: 1.1rem;
+                        color: #FD611A;
+                        background: #EEEEEE;
+                        border-radius: 10px;
+                        padding: 0 6px 3px 6px;
+                        margin: 0 0 0 3px;
+                    }
+                }
+
+            }
+        }
+    }
+}
