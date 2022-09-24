@@ -204,6 +204,13 @@ export let products=[
     },
     {
         category:'Mothers y combos',
+        product:'Mother ASUS Prime B660M-A D4',
+        price:28900,
+        url:'./assets/images/latest-new4.jpg',
+        alt:'product4',
+    },
+    {
+        category:'Mothers y combos',
         product:'Mother ASUS PRIME A520M-K AM4',
         price:15100,
         url:'./assets/images/latest-new2.jpg',

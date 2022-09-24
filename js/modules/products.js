@@ -1,6 +1,6 @@
 'use strict'
 import { products } from "./img-slider.js";
-import {productFunction,btnFilter,btnCategoriesFunction,clearFilter,selectOptionsHide,selectOptionsFilter} from './products-functions.js';
+import {productFunction,btnFilter,btnCategoriesFunction,selectOptionsHide,selectOptionsFilter} from './products-functions.js';
 
 
 let productsContainer=document.getElementById('products');
@@ -33,9 +33,7 @@ btnFilter(btns,products,productsContainer)
 //Abrir y Cerrar menu de opciones del filtro categoria
 btnCategoriesFunction(btnCategoriesOpen,btnCategoriesClose,btnOptions)
 
-//Limpiar filtro categorias
-clearFilter(productsContainer,localStorageProducts)
 
 //!Filtro por precio
 selectOptionsHide(select,selectOptions)
-selectOptionsFilter(selectOption,products,productsContainer)
+selectOptionsFilter(selectOption,productsContainer)

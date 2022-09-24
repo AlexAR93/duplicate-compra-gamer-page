@@ -421,8 +421,8 @@
   background: #FFFFFF;
 }
 .main .main-products .filter__price .select {
-  padding-left: 10px;
-  width: 364.25px;
+  padding: 0 10px;
+  max-width: 364.25px;
   height: 59px;
   display: flex;
   flex-direction: column;
@@ -439,10 +439,7 @@
   align-items: center;
   justify-content: space-between;
 }
-.main .main-products .filter__price .select p span {
-  text-align: end;
-  font-size: 2rem;
-  transform: rotate(90deg);
+.main .main-products .filter__price .select p i {
   color: #FD611A;
 }
 .main .main-products .filter__price .select::after {
@@ -453,21 +450,31 @@
 }
 .main .main-products .filter__price .select-options {
   position: absolute;
-  width: 364.25px;
-  background: #FFFFFF;
-  box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12);
-  border-radius: 4px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: start;
+  width: 80%;
 }
 .main .main-products .filter__price .select-options ul {
-  font-size: 15px;
-}
-.main .main-products .filter__price .select-options ul li {
-  padding: 0 15px;
-  height: 45px;
   display: flex;
   flex-direction: column;
   align-items: start;
   justify-content: center;
+  width: 364.25px;
+  background: #FFFFFF;
+  box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12);
+  font-size: 15px;
+  border-radius: 4px;
+}
+.main .main-products .filter__price .select-options ul li {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  width: 100%;
+  padding: 0 15px;
+  height: 45px;
 }
 .main .main-products .filter__price .select-options ul li:hover {
   background: #EEEEEE;

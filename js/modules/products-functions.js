@@ -4,6 +4,8 @@ let tag=document.createElement('p');
 tagContainer.appendChild(tag);
 tagContainer.classList.add('products__tag');
 
+
+//!Crear cards para cada productos
 let productFunction=(productsContainer,returnProducts)=>{
 
     //Que se muestre el tag solo cuando utilice el filtro
@@ -37,12 +39,29 @@ let productFunction=(productsContainer,returnProducts)=>{
     })
 }
 
+
+//!Limpiar filtro por tag
+let clearFilter=(productsContainer,products)=>{
+    tag.addEventListener('click',()=>{
+        localStorage.setItem('productos',JSON.stringify(products))
+
+        tag.innerHTML='';
+        productsContainer.innerHTML='';
+        let newArray=JSON.parse(localStorage.getItem('productos'));
+
+        productFunction(productsContainer,newArray);
+    })
+}
+
+
+//!Filtrar cards/productos por categoria
+
 let btnFilter=(btns,products,productsContainer)=>{
     btns.forEach((btn)=>{
         btn.addEventListener('click',()=>{
+            let newArray=JSON.parse(localStorage.getItem('productos'));
             let productsDos=products.filter((pd)=>pd.category==btn.innerHTML)
             localStorage.setItem('productos',JSON.stringify(productsDos))
-
             //Vaciar el div
             productsContainer.innerHTML='';
 
@@ -52,11 +71,15 @@ let btnFilter=(btns,products,productsContainer)=>{
             spanTag.innerHTML='x'
             tag.appendChild(spanTag)
 
+
             productFunction(productsContainer,productsDos)
+            console.log(productsDos,newArray,btn.innerHTML)
         })
+        clearFilter(productsContainer,products)
     })
 }
 
+//!ocultar y mostrar las opciones de categorias
 
 let btnCategoriesFunction=(btnCategories,btnCategoriesClose,btnOptions)=>{
     btnCategories.addEventListener('click',()=>{
@@ -67,14 +90,8 @@ let btnCategoriesFunction=(btnCategories,btnCategoriesClose,btnOptions)=>{
     })
 }
 
-let clearFilter=(productsContainer,returnProducts)=>{
-    tag.addEventListener('click',()=>{
-        tag.innerHTML='';
-        productsContainer.innerHTML='';
-        productFunction(productsContainer,returnProducts);
-    })
-}
 
+//!Mostrar menu del select(ordenar por precio)
 let selectOptionsHide=(select,selectOptions)=>{
 
     select.addEventListener('click',()=>{
@@ -83,21 +100,26 @@ let selectOptionsHide=(select,selectOptions)=>{
     })
 }
 
-let selectOptionsFilter=(selectOption,products,productsContainer)=>{
+//!Funcion del select filter para ordenar por precio
+let selectOptionsFilter=(selectOption,productsContainer)=>{
     selectOption.forEach((option)=>{
      
         option.addEventListener('click',()=>{
+            
+            let newArray=JSON.parse(localStorage.getItem('productos'));
 
-            let newArray=[...products];
-            let productsDos=(option.value==1||option.value==-1)?newArray.sort(function(a,b,valor){
+            let newArrayNormal=[...newArray]
+            let newArraySort=[...newArray.sort(function(a,b){
 
                 if(option.value==1?a.price>b.price:a.price<b.price){
                     return -1
                 }
-            }):products;
+            })];
+
+            let productsDos=(option.value==1||option.value==-1)?newArraySort:newArrayNormal;
          
 
-            localStorage.setItem('productos',JSON.stringify(productsDos))
+            localStorage.setItem('productos',JSON.stringify(newArrayNormal))
 
             //Vaciar el div
             productsContainer.innerHTML='';
