@@ -37,3 +37,4 @@ btnCategoriesFunction(btnCategoriesOpen,btnCategoriesClose,btnOptions)
 //!Filtro por precio
 selectOptionsHide(select,selectOptions)
 selectOptionsFilter(selectOption,productsContainer)
+

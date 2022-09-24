@@ -5,6 +5,7 @@ tagContainer.appendChild(tag);
 tagContainer.classList.add('products__tag');
 
 
+
 //!Crear cards para cada productos
 let productFunction=(productsContainer,returnProducts)=>{
 
@@ -37,6 +38,7 @@ let productFunction=(productsContainer,returnProducts)=>{
  
     
     })
+    addToCart()
 }
 
 
@@ -125,6 +127,35 @@ let selectOptionsFilter=(selectOption,productsContainer)=>{
             productsContainer.innerHTML='';
        
             productFunction(productsContainer,productsDos)
+        })
+    })
+}
+
+let addToCart=()=>{
+    let btn=document.querySelectorAll('.products__product>article>button');
+    btn.forEach((b)=>{
+        b.addEventListener('click',()=>{
+            let nameProduct=b.parentElement.querySelector('h2').innerHTML;
+            console.log(nameProduct)
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 2000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.addEventListener('mouseenter', Swal.stopTimer)
+                  toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+              })
+              
+              Toast.fire({
+                icon: 'success',
+                title: `${nameProduct} 
+                <span style="color: red;">Agregado al carrito!</span>`
+              })
+
+    
         })
     })
 }
