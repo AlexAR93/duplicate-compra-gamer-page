@@ -28,7 +28,7 @@ productFunction(productsContainer,localStorageProducts);
 //!Categoria filtro
 
 //Funcion para filtrar por categoria y mostrar en pantalla
-btnFilter(btns,products,productsContainer)
+btnFilter(btns,localStorageProducts,productsContainer)
 
 //Abrir y Cerrar menu de opciones del filtro categoria
 btnCategoriesFunction(btnCategoriesOpen,btnCategoriesClose,btnOptions)
