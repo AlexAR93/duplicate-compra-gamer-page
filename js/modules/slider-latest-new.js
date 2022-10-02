@@ -1,4 +1,4 @@
-import { latestNews } from './img-slider.js';
+import { latestNews } from './data.js';
 
 
 const divContainer=document.getElementById('latest-new-products__slider');

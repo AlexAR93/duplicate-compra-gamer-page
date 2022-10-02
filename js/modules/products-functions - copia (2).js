@@ -5,6 +5,7 @@ tagContainer.appendChild(tag);
 tagContainer.classList.add('products__tag');
 
 
+
 //!Agrupar funciones
 let groupFunctions=(products)=>{
     products()
@@ -19,19 +20,20 @@ let groupFunctions=(products)=>{
         
         let select=document.getElementById('select');
         let selectOptions=document.getElementById('select-options');
-        let selectOption=document.querySelectorAll('.select-option');
+        let selectOption=document.querySelectorAll('.select-option')
+        
         
         //!Crear cards para cada productos
         productFunction(productsContainer,products);
         
-        //!Filtrar cards/productos por categoria
-        btnFilter(btns,products,productsContainer,selectOption)
+        //!Categoria filtro
         
-        //!limpiar categoria
-        clearFilter(productsContainer,products,selectOption)
-
+        //!Filtrar cards/productos por categoria
+        btnFilter(btns,products,productsContainer)
+        
         //!ocultar y mostrar las opciones de categorias
         btnCategoriesFunction(btnCategoriesOpen,btnCategoriesClose,btnOptions)
+        
         
         //Filtro por precio
         //!Mostrar menu del select(ordenar por precio)
@@ -71,8 +73,47 @@ let productFunction=(productsContainer,returnProducts)=>{
 
         productsContainer.appendChild(divContent)     
  
+    
     })
     addToCart()
+}
+
+
+//!Limpiar filtro por tag
+let clearFilter=(productsContainer,products)=>{
+    tag.addEventListener('click',()=>{
+        localStorage.setItem('productos',JSON.stringify(products))
+
+        tag.innerHTML='';
+        productsContainer.innerHTML='';
+        let newArray=JSON.parse(localStorage.getItem('productos'));
+
+        productFunction(productsContainer,newArray);
+    })
+}
+
+
+let btnFilter=(btns,products,productsContainer)=>{
+    btns.forEach((btn)=>{
+        btn.addEventListener('click',()=>{
+            let newArray=JSON.parse(localStorage.getItem('productos'));
+            let productsDos=products.filter((pd)=>pd.category==btn.innerHTML)
+            localStorage.setItem('productos',JSON.stringify(productsDos))
+            //Vaciar el div
+            productsContainer.innerHTML='';
+
+            //Agregar texto a tag, el mismo que la categoria
+            tag.innerHTML=btn.innerHTML;
+            let spanTag=document.createElement('span');
+            spanTag.innerHTML='x'
+            tag.appendChild(spanTag)
+
+
+            productFunction(productsContainer,productsDos)
+            console.log(productsDos,newArray,btn.innerHTML)
+        })
+        clearFilter(productsContainer,products)
+    })
 }
 
 
@@ -82,38 +123,6 @@ let btnCategoriesFunction=(btnCategories,btnCategoriesClose,btnOptions)=>{
     })
     btnCategoriesClose.addEventListener('click',()=>{
         btnOptions.classList.toggle('options-hide')
-    })
-}
-
-let btnFilter=(btns,products,productsContainer,selectOption)=>{
-
-    btns.forEach((btn)=>{
-        btn.addEventListener('click',()=>{
-            productsContainer.innerHTML='';
-
-            //Agregar texto a tag, el mismo que la categoria
-            tag.innerHTML=btn.innerHTML;
-            let spanTag=document.createElement('span');
-            spanTag.innerHTML='x'
-            tag.appendChild(spanTag)
-
-            productFunction(productsContainer,products.filter((p)=>p.category==btn.innerHTML))
-
-            selectOptionsFilter(selectOption,productsContainer,products.filter((p)=>p.category==btn.innerHTML))
-   
-        })
-
-    })
-}
-
-//!Limpiar filtro por tag
-let clearFilter=(productsContainer,products,selectOption)=>{
-    tag.addEventListener('click',()=>{
-        tag.innerHTML='';
-        productsContainer.innerHTML='';
-        productFunction(productsContainer,products);
-
-        selectOptionsFilter(selectOption,productsContainer,products)
     })
 }
 
@@ -127,44 +136,30 @@ let selectOptionsHide=(select,selectOptions)=>{
 }
 
 
-let selectOptionsFilter=(selectOption,productsContainer,products)=>{
+let selectOptionsFilter=(selectOption,productsContainer)=>{
     selectOption.forEach((option)=>{
      
         option.addEventListener('click',()=>{
-            products.sort(function(a,b){
-                
-                if(a.price==b.price){
-                    return 0
+            
+            let newArray=JSON.parse(localStorage.getItem('productos'));
+
+            let newArrayNormal=[...newArray]
+            let newArraySort=[...newArray.sort(function(a,b){
+
+                if(option.value==1?a.price>b.price:a.price<b.price){
+                    return -1
                 }
-                
-                if(option.value==0){
-                    if(a.id<b.id){
-                        return -1
-                    }
-                }else if(option.value==1){
-                    if(a.price>b.price){
-                        return -1
-                    }
-                }else if(option.value==-1){
-                    if(a.price<b.price){
-                        return -1
-                    }
-                }else if(option.value==2){
-                    if(a.product.toLowerCase()<b.product.toLowerCase()){
-                        return -1
-                    }
-                    
-                }else if(option.value==-2){
-                    if(a.product.toLowerCase()>b.product.toLowerCase()){
-                        return -1
-                    }
-                }
-                return 1
-            });
+            })];
+
+            let productsDos=(option.value==1||option.value==-1)?newArraySort:newArrayNormal;
+         
+
+            localStorage.setItem('productos',JSON.stringify(newArrayNormal))
+
             //Vaciar el div
             productsContainer.innerHTML='';
        
-            productFunction(productsContainer,products)
+            productFunction(productsContainer,productsDos)
         })
     })
 }
@@ -196,6 +191,7 @@ let addToCart=()=>{
         })
     })
 }
+
 
 
 export{

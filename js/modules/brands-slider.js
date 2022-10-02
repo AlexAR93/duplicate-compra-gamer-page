@@ -1,6 +1,6 @@
 'use strict'
 
-import {brands} from './img-slider.js';
+import {brands} from './data.js';
 const brandsSliderContainer=document.getElementById('brands-slider')
 
 export default brands.forEach((b,i)=>{

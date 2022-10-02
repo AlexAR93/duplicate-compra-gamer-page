@@ -1,4 +1,4 @@
-import images from './img-slider.js';
+import images from './data.js';
 let slickDots=document.getElementById('slick-dots');
 
 const divContainer=document.getElementById('slider__container')
