@@ -1,82 +1,92 @@
 [
     {
-        "id":1,
+        "id":0,
         "category":"Teclado y mouses",
         "product":"Mouse ASUS ROG Gladius II Wireless RGB",
         "price":17600,
         "url":"./assets/images/latest-new1.jpg",
-        "alt":"product1"
+        "alt":"product0",
+        "quantity":"10"
+    },
+    {
+        "id":1,
+        "category":"Mothers y combos",
+        "product":"Mother ASUS Prime B660M-A D4",
+        "price":28900,
+        "url":"./assets/images/latest-new4.jpg",
+        "alt":"product1",
+        "quantity":"10"
     },
     {
         "id":2,
         "category":"Mothers y combos",
-        "product":"Mother ASUS Prime B660M-A D4",
-        "price":28900,
-        "url":"./assets/images/latest-new4.jpg",
-        "alt":"product2"
-    },
-    {
-        "id":3,
-        "category":"Mothers y combos",
         "product":"Mother ASUS PRIME A520M-K AM4",
         "price":15100,
         "url":"./assets/images/latest-new2.jpg",
-        "alt":"product3"
+        "alt":"product2",
+        "quantity":"10"
     },
     {
-        "id":4,
+        "id":3,
         "category":"Placas de video y otras",
         "product":"Placa Video ASUS GeForce GTX 1660 TI 6GB GDDR6 TUF EVO OC",
         "price":92450,
         "url":"./assets/images/latest-new3.jpg",
-        "alt":"product4"
+        "alt":"product3",
+        "quantity":"10"
     },
     {
-        "id":5,
+        "id":4,
         "category":"Mothers y combos",
         "product":"Mother ASUS Prime B660M-A D4",
         "price":28900,
         "url":"./assets/images/latest-new4.jpg",
-        "alt":"product5"
+        "alt":"product4",
+        "quantity":"10"
     },
     {
-        "id":6,
+        "id":5,
         "category":"Mothers y combos",
         "product":"Mother ASUS Prime Z690-P WIFI S1700",
         "price":59750,
         "url":"./assets/images/latest-new5.jpg",
-        "alt":"product6"
+        "alt":"product5",
+        "quantity":"10"
     },
     {
-        "id":7,
+        "id":6,
         "category":"Eqipos y Notebooks",
         "product":"Notebook Gamer AORUS KD 15.6 Core I7 11800H 16GB (2X8GB) 512GB SSD NVMe RTX 3060 240Hz W11",
         "price":455500,
         "url":"./assets/images/notebook.jpg",
-        "alt":"product7"
+        "alt":"product6",
+        "quantity":"10"
     },
     {
-        "id":8,
+        "id":7,
         "category":"Eqipos y Notebooks",
         "product":"Notebook ASUS ZEPHYRUS 14 WQHD RYZEN 9 4900HS 16GB 1TB SSD NVMe RTX 2060",
         "price":465000,
         "url":"./assets/images/notebook2.jpg",
-        "alt":"product8"
+        "alt":"product7",
+        "quantity":"10"
     },
     {
-        "id":9,
+        "id":8,
         "category":"Almacenamiento",
         "product":"Disco Sólido SSD Gigabyte 120GB 500MB/s",
         "price":3850,
         "url":"./assets/images/disco.jpg",
-        "alt":"product9"
+        "alt":"product8",
+        "quantity":"10"
     },
     {
-        "id":10,
+        "id":9,
         "category":"Almacenamiento",
         "product":"Disco Sólido SSD Adata 240GB SU630SS Ultimate 520MB/s",
         "price":4620,
         "url":"./assets/images/disco2.jpg",
-        "alt":"product10"
+        "alt":"product9",
+        "quantity":"10"
     }
 ]
