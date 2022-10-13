@@ -75,6 +75,24 @@
                     padding-top: 2px;
                 }
             }
+            .cart-style{
+                position: absolute;
+                width: 100%;
+                min-height: 100%;
+                top: 0;
+                left: 0;
+                @include flex(column,center,center);
+                cursor: auto;
+                .cart-container{
+                    background: #fff;
+                    width: 80%;
+                    min-height: 80%;
+                    @include flex(column,start,start);
+                }
+            }
+            .hide-cart{
+                display: none;
+            }
         }
     }
     .nav{

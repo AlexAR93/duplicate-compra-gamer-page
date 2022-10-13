@@ -20,6 +20,8 @@ let groupFunctions=(products)=>{
         let select=document.getElementById('select');
         let selectOptions=document.getElementById('select-options');
         let selectOption=document.querySelectorAll('.select-option');
+
+        let cardContainer=document.getElementById('cart-container')
         
         //!Crear cards para cada productos
         productFunction(productsContainer,products);
@@ -38,6 +40,10 @@ let groupFunctions=(products)=>{
         selectOptionsHide(select,selectOptions)
         //!Funcion del select filter para ordenar por precio
         selectOptionsFilter(selectOption,productsContainer,products)
+
+        openCart()
+        localStorage.getItem('productsNow')&&cart(cardContainer,JSON.parse(localStorage.getItem('productsNow')))
+
     })
     .catch(error=>alert(`No se han podido cargar los productos`))
 }
@@ -56,7 +62,7 @@ let productFunction=(productsContainer,returnProducts)=>{
         let p=document.createElement('p');
         let buyBtn=document.createElement('button');
 
-        article.setAttribute('id',`product${i}`);
+        article.setAttribute('id',`${product.alt}`);
         tittle.innerHTML=product.product;
         img.setAttribute('src',product.url);
         img.setAttribute('alt',product.alt);   
@@ -72,7 +78,7 @@ let productFunction=(productsContainer,returnProducts)=>{
         productsContainer.appendChild(divContent)     
  
     })
-    addToCart()
+    addToCart(returnProducts)
 }
 
 
@@ -169,9 +175,15 @@ let selectOptionsFilter=(selectOption,productsContainer,products)=>{
     })
 }
 
-let addToCart=()=>{
+let addToCart=(products)=>{
     let btn=document.querySelectorAll('.products__product>article>button');
+    let getLocalStorage=JSON.parse(localStorage.getItem('productsNow'))
+
+    let cardContainer=document.getElementById('cart-container')
+    let newArray=[];
+    getLocalStorage&&(newArray=[...getLocalStorage]);
     btn.forEach((b)=>{
+   
         b.addEventListener('click',()=>{
             let nameProduct=b.parentElement.querySelector('h2').innerHTML;
             const Toast = Swal.mixin({
@@ -192,12 +204,55 @@ let addToCart=()=>{
                 <span style="color: red;">Agregado al carrito!</span>`
               })
 
-    
+
+              newArray=[...newArray,products.find(p=>p.alt==b.parentElement.id)];
+          
+              console.log(newArray)
+              localStorage.setItem('productsNow',JSON.stringify(newArray))
+
+              cart(cardContainer,newArray)
+              
         })
+
     })
 }
+
+let cart=(cardContainer,cartProduct)=>{
+    cardContainer.innerHTML='';
+    cartProduct.forEach((product)=>{
+        let div=document.createElement('div')
+        div.innerHTML=`
+        <div>
+
+            <img src="${product.url}" alt="${product.alt}">
+            <h2>${product.product}</h2>
+            <button>-</button>
+            <p>${product.quantity}</p>
+            <button>+</button>
+            <button id="${product.id}">Eliminar</button>
+        </div>
+        `  
+        cardContainer.appendChild(div)
+
+    })
+}
+
+let openCart=()=>{
+    let btnCart=document.getElementById('cart-btn');
+    let btnClose=document.getElementById('cart-open');
+    let cartStyle=document.getElementById('cart-style');
+    btnCart.addEventListener('click',()=>{
+        cartStyle.classList.remove('hide-cart')
+        console.log('hola')
+    })
+    btnClose.addEventListener('click',()=>{
+        cartStyle.classList.add('hide-cart')
+    })
+}
+
 
 
 export{
     groupFunctions
 }
+
