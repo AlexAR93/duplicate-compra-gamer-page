@@ -79,15 +79,55 @@
                 position: absolute;
                 width: 100%;
                 min-height: 100%;
-                top: 0;
+                top: 20%;
                 left: 0;
                 @include flex(column,center,center);
                 cursor: auto;
                 .cart-container{
-                    background: #fff;
+                    background: #f2f2f2;
                     width: 80%;
-                    min-height: 80%;
-                    @include flex(column,start,start);
+                    min-height: 50vh;
+                    @include flex(column,start,center);
+                    padding: 1rem;
+                    box-shadow: 0 1px 5px 0 rgba(0,0,0,.2),0 3px 1px 0 rgba(0,0,0,.12),0 2px 2px 0 rgba(0,0,0,.14);
+                    div{
+                        display: grid;
+                        grid-template-areas:'img img img'
+                                            'product product product' 
+                                            'btnSubtract quantity btnSum'
+                                            'delete delete delete'
+                        ;
+                        width: 100%;
+                        margin-bottom: 30px;
+                        background: #fff;
+                        justify-items: center;
+                        padding: 1rem;
+                        box-shadow: 0 1px 5px 0 rgba(0,0,0,.2),0 3px 1px 0 rgba(0,0,0,.12),0 2px 2px 0 rgba(0,0,0,.14);
+                        height: 302px;
+                        border-radius: 12px;
+                        text-align: center;
+                        img{
+                            grid-area: img;
+                        }
+                        h2{
+                            grid-area: product;
+                        }
+                        .btn-subtraction{
+                            grid-area: btnSubtract;
+                        }
+                        .quantity{
+                            grid-area: quantity;
+                        }
+                        .btn-sum{
+                            grid-area: btnSum;
+                        }
+                        .btn-delete{
+                            grid-area: delete;
+                        }
+                    }
+                }
+                .cart-open{
+                    margin-top: .3rem;
                 }
             }
             .hide-cart{

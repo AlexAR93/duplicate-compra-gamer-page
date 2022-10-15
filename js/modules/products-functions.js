@@ -227,7 +227,7 @@ let cartProductDom=(newArray)=>{
             <img src="${product.url}" alt="${product.alt}">
             <h2>${product.product}</h2>
             <button class="btn-subtraction">-</button>
-            <p>0</p>
+            <p class='quantity'>${0}</p>
             <button class="btn-sum">+</button>
             <button class="btn-delete" id="${product.id}">Eliminar</button>
         ` 
