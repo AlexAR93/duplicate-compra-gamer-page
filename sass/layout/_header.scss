@@ -106,6 +106,9 @@
                         height: 302px;
                         border-radius: 12px;
                         text-align: center;
+                        button{
+                            width: 100%;
+                        }
                         img{
                             grid-area: img;
                         }
