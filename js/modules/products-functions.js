@@ -206,7 +206,7 @@ let addToCart=(cardButtons,products,newArray)=>{
 
 
             JSON.parse(localStorage.getItem('products'))&&(newArray=[...JSON.parse(localStorage.getItem('products')),products.find(p=>p.id==btn.id)]);
-            newArray.find(p=>p.id==btn.id&&(p=p.lot=p.lot-p.quantity));
+            newArray.find(p=>p.id==btn.id&&(p=p.lot=p.lot-1));
             cartCounter(newArray,cardCunter,p)
             
             cartProductDom(newArray)
