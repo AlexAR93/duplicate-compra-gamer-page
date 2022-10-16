@@ -150,6 +150,7 @@
 }
 .header__user .cart .cart-style .cart-container div h2 {
   grid-area: product;
+  font-size: 1rem;
 }
 .header__user .cart .cart-style .cart-container div .btn-subtraction {
   grid-area: btnSubtract;

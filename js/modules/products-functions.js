@@ -19,8 +19,6 @@ let groupFunctions=(products)=>{
         
         //!Filtrar cards/productos por categoria
         btnFilter(btns,products,productsContainer,selectOption);
-
-        cart(products)
        
     })
     .catch(error=>console.log(error))
@@ -44,6 +42,7 @@ let productFunction=(productsContainer,products)=>{
 
         productsContainer.appendChild(divContent)   
     })
+    cart(products)
 }
 
 
@@ -149,9 +148,10 @@ let selectOptionsHide=()=>{
 
 
 let cart=(products)=>{
-  
     let cardButtons=document.querySelectorAll('.products__product>article>button');
+
     let localStoragee=JSON.parse(localStorage.getItem('products'));
+
     let newArray=[];
     localStoragee&&(newArray=[...localStoragee])
     // localStoragee&&deleteProduct(localStoragee)
@@ -180,21 +180,43 @@ let openCloseCart=()=>{
 }
 
 let addToCart=(cardButtons,products,newArray)=>{
-
+    let cardCunter=document.getElementById('counter-cart');
+    let p=document.createElement('p');
+    cartCounter(newArray,cardCunter,p)
     cardButtons.forEach(btn=>{
         btn.addEventListener('click',()=>{
             let btnAdd=document.getElementById(`${btn.id}`).parentElement;
             let be=newArray.some(p=>p.id==btn.id);
+
+            products=products.map(p=>p={...p,quantity:1})
+
             if(be==true){
+                let lot=newArray.find(p=>p.id==btn.id);
+                console.log(lot.lot)
+                lot.lot>0?(newArray.find(p=>p.id==btn.id&&(p.lot=p.lot-1)),
+                newArray.find(p=>p.id==btn.id&&(p.quantity=p.quantity+1)),
+                
+                localStorage.setItem(`products`,JSON.stringify(newArray)),
+                cartProductDom(newArray),
+                deleteProduct(newArray,cartCounter,cardCunter,p)):alert('Sin stock!!')
                 return
             }
 
+            
+
+
             JSON.parse(localStorage.getItem('products'))&&(newArray=[...JSON.parse(localStorage.getItem('products')),products.find(p=>p.id==btn.id)]);
-         
-       
+            newArray.find(p=>p.id==btn.id&&(p=p.lot=p.lot-p.quantity));
+            cartCounter(newArray,cardCunter,p)
+            
             cartProductDom(newArray)
-            deleteProduct(newArray)
+            deleteProduct(newArray,cartCounter,cardCunter,p)
             localStorage.setItem(`products`,JSON.stringify(newArray))
+
+   
+            
+
+
             const Toast = Swal.mixin({
                 toast: true,
                 position: 'top-end',
@@ -217,7 +239,6 @@ let addToCart=(cardButtons,products,newArray)=>{
 })
 }
 
-//! aca 
 let cartProductDom=(newArray)=>{
     let cardContainer=document.getElementById('cart-container');
     cardContainer.innerHTML='';
@@ -227,18 +248,17 @@ let cartProductDom=(newArray)=>{
             <img src="${product.url}" alt="${product.alt}">
             <h2>${product.product}</h2>
             <button class="btn-subtraction">-</button>
-            <p class='quantity'>${0}</p>
+            <p class='quantity'>${product.quantity}</p>
             <button class="btn-sum">+</button>
             <button class="btn-delete" id="${product.id}">Eliminar</button>
         ` 
         div.setAttribute('id',`product${product.id}`)
         cardContainer.appendChild(div)
-  
     })
 
 }
 
-let deleteProduct=(newArray)=>{
+let deleteProduct=(newArray,cartCounter,cardCunter,p)=>{
     let btnDelete=document.querySelectorAll('.btn-delete')
     btnDelete.forEach((btn)=>{
         btn.addEventListener('click',()=>{  
@@ -249,10 +269,19 @@ let deleteProduct=(newArray)=>{
             newArray.splice(productIndex,1)
             productContainer.parentElement.removeChild(productContainer)
             localStorage.setItem('products',JSON.stringify(newArray))
+
+            cartCounter(newArray,cardCunter,p)
         })
     })
 }
 
+let cartCounter=(newArray,cardCunter,p)=>{
+    //!---
+    let counter=newArray.length;
+    p.innerHTML=counter;
+    cardCunter.appendChild(p)
+    //!---
+}
 
 export{
     groupFunctions
