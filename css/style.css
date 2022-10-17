@@ -117,6 +117,7 @@
   align-items: center;
   justify-content: center;
   cursor: auto;
+  z-index: 99;
 }
 .header__user .cart .cart-style .cart-container {
   background: #f2f2f2;

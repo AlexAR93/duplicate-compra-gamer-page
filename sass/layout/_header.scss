@@ -83,6 +83,7 @@
                 left: 0;
                 @include flex(column,center,center);
                 cursor: auto;
+                z-index: 99;
                 .cart-container{
                     background: #f2f2f2;
                     width: 80%;

@@ -1,7 +1,7 @@
 'use strict'
 
 import {groupFunctions} from './products-functions.js';
-
+import {cart} from './cart.js'
 let products=async()=>{
     let url="./js/modules/products.json";
     let productsDate=await fetch(url);
@@ -9,7 +9,7 @@ let products=async()=>{
     return products
 }
 
-groupFunctions(products)
+groupFunctions(products,cart)
 
 
 
