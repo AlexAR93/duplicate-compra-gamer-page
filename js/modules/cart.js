@@ -2,20 +2,15 @@
 let productsInLocal=JSON.parse(localStorage.getItem('products'));
 
 let cart=(products=productsInLocal)=>{
-    let cardButtons=document.querySelectorAll('.products__product>article>button');
-    let cardCunter=document.getElementById('counter-cart');
-    let p=document.createElement('p');
     let newArray=[];
     productsInLocal&&(newArray=[...productsInLocal])
     // localStoragee&&deleteProduct(localStoragee)
     localStorage.setItem('products',JSON.stringify(newArray))
     openCloseCart()
   
-    addToCart(cardButtons,products,newArray,cardCunter,p);
-
     cartProductDom(newArray)
-    deleteProduct(newArray,cartCounter,cardCunter,p)
-   
+    addToCart(products,newArray);
+
 }
 
 let openCloseCart=()=>{
@@ -24,15 +19,19 @@ let openCloseCart=()=>{
     let cartStyle=document.getElementById('cart-style');
     btnCart.addEventListener('click',()=>{
         cartStyle.classList.remove('hide-cart')
-        console.log('hola')
+
     })
     btnClose.addEventListener('click',()=>{
         cartStyle.classList.add('hide-cart')
     })
 }
-
-let addToCart=(cardButtons,products,newArray,cardCunter,p)=>{
-
+//!ACAAA 2
+let addToCart=(products,newArray)=>{
+    let cardButtons=document.querySelectorAll('.products__product>article>button');
+    let cardCunter=document.getElementById('counter-cart');
+    let p=document.createElement('p');
+    deleteProduct(newArray,cartCounter,cardCunter,p)
+    sumAndSubtractProducts(newArray)
     cartCounter(newArray,cardCunter,p)
     cardButtons.forEach(btn=>{
         btn.addEventListener('click',()=>{
@@ -46,15 +45,17 @@ let addToCart=(cardButtons,products,newArray,cardCunter,p)=>{
             <span style="color: red;">Agregado!</span>`;
 
             products=products.map(p=>p={...p,quantity:1})
-
+            
             if(be==true){
+                newArray=[...JSON.parse(localStorage.getItem('products'))]
                 let lot=newArray.find(p=>p.id==btn.id);
-                console.log(lot.lot)
+
                 lot.lot>0?(newArray.find(p=>p.id==btn.id&&(p.lot=p.lot-1)),
                 newArray.find(p=>p.id==btn.id&&(p.quantity=p.quantity+1)),
                 
                 localStorage.setItem(`products`,JSON.stringify(newArray)),
                 cartProductDom(newArray),
+                sumAndSubtractProducts(newArray),
                 deleteProduct(newArray,cartCounter,cardCunter,p),
                 buyAlert(messageTwo)):alert('Sin stock!!')
                 return
@@ -63,11 +64,12 @@ let addToCart=(cardButtons,products,newArray,cardCunter,p)=>{
             JSON.parse(localStorage.getItem('products'))&&(newArray=[...JSON.parse(localStorage.getItem('products')),products.find(p=>p.id==btn.id)]);
             newArray.find(p=>p.id==btn.id&&(p=p.lot=p.lot-1));
             cartCounter(newArray,cardCunter,p)
-            
+       
             cartProductDom(newArray)
+  
             deleteProduct(newArray,cartCounter,cardCunter,p)
             localStorage.setItem(`products`,JSON.stringify(newArray));
-
+            sumAndSubtractProducts(newArray)
             buyAlert(messageOne)
 
         })
@@ -80,11 +82,12 @@ let cartProductDom=(newArray)=>{
     newArray.forEach((product)=>{
         let div=document.createElement('div')
         div.innerHTML=`
+            
             <img src="${product.url}" alt="${product.alt}">
             <h2>${product.product}</h2>
-            <button class="btn-subtraction">-</button>
-            <p class='quantity'>${product.quantity}</p>
-            <button class="btn-sum">+</button>
+            <button class="btn-subtraction" value="${product.id}">-</button>
+            <p class='quantity' id='quantity${product.id}'>${product.quantity}</p>
+            <button class="btn-sum" value="${product.id}">+</button>
             <button class="btn-delete" id="${product.id}">Eliminar</button>
         ` 
         div.setAttribute('id',`product${product.id}`)
@@ -133,6 +136,62 @@ let buyAlert=(message)=>{
         icon: 'success',
         title: `${message}`
       })
+}
+
+let sumAndSubtractProducts=(newArray)=>{
+    let sumBtn=document.querySelectorAll('.btn-sum');
+    let subtractBtn=document.querySelectorAll('.btn-subtraction');
+    sumProductFunction(sumBtn,newArray)
+    subtractProductFunction(subtractBtn,newArray)
+}
+//! ACA x2 
+const sumProductFunction=(sumBtn,newArray)=>{
+    sumBtn.forEach(btn=>{
+        btn.addEventListener('click',()=>{
+            // aca
+            let lot=newArray.find(p=>p.id==parseInt(btn.getAttribute("value")));
+
+            let productContainer=document.getElementById(`product${parseInt(btn.getAttribute("value"))}`)
+            let cartContainer=document.querySelectorAll('.cart-container>div')
+            let cartContainerArray=Array.from(cartContainer)
+            let productIndex=cartContainerArray.findIndex(p=>p.id==productContainer.id);
+            
+            let btnFather=document.getElementById(`quantity${parseInt(btn.getAttribute("value"))}`);
+            lot.lot>0?(
+            newArray.find(p=>p.id==parseInt(btn.getAttribute("value"))&&(p.lot=p.lot-1)),
+            newArray.find(p=>p.id==parseInt(btn.getAttribute("value"))&&(p.quantity=p.quantity+1)),
+            localStorage.setItem('products',JSON.stringify(newArray))):alert('Sin stock!!')
+ 
+         
+            btnFather.innerHTML=newArray[productIndex].quantity;
+            
+        })
+    }
+    )
+}
+let subtractProductFunction=(subtractBtn,newArray)=>{
+    subtractBtn.forEach(btn=>{
+        btn.addEventListener('click',()=>{
+        // aca
+        let lot=newArray.find(p=>p.id==parseInt(btn.getAttribute("value")));
+
+        let productContainer=document.getElementById(`product${parseInt(btn.getAttribute("value"))}`)
+        let cartContainer=document.querySelectorAll('.cart-container>div')
+        let cartContainerArray=Array.from(cartContainer)
+        let productIndex=cartContainerArray.findIndex(p=>p.id==productContainer.id);
+      
+            let btnFather=document.getElementById(`quantity${parseInt(btn.getAttribute("value"))}`);
+            lot.lot<9?(
+            newArray.find(p=>p.id==parseInt(btn.getAttribute("value"))&&(p.lot=p.lot+1)),
+            newArray.find(p=>p.id==parseInt(btn.getAttribute("value"))&&(p.quantity=p.quantity-1)),
+            localStorage.setItem('products',JSON.stringify(newArray))):false
+ 
+
+            btnFather.innerHTML=newArray[productIndex].quantity;
+
+        })
+    }
+    )
 }
 
 export{

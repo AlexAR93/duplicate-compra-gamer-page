@@ -35,7 +35,7 @@ let productFunction=(productsContainer,products,cart)=>{
             <img src="${product.url}" alt="${product.alt}">
             <h2>${product.product}</h2>
             <p>$${product.price}</p>
-            <button id="${product.id}">Sumar al carrito</button>
+            <button id="${product.id}" value="${product.id}">Sumar al carrito</button>
         </article>
         `
         divContent.classList.add('products__product')
