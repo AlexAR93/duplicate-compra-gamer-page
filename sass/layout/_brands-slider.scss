@@ -1,4 +1,4 @@
 .brands-slider{
     @include flex(row,center,start);
-    overflow:hidden;
+    overflow-x: hidden;
 }
