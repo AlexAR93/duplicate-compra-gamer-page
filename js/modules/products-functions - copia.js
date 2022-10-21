@@ -6,99 +6,83 @@ tagContainer.classList.add('products__tag');
 
 
 //!Agrupar funciones
-let groupFunctions=(products)=>{
+let groupFunctions=(products,cart)=>{
     products()
     .then(products=>{
         let productsContainer=document.getElementById('products');
-        let btns=document.querySelectorAll('.btn');
-        
-        let btnCategoriesOpen=document.getElementById('categories');
-        let btnCategoriesClose=document.getElementById('tittle-options-close');
-        
-        let btnOptions=document.getElementById('options');
-        
-        let select=document.getElementById('select');
-        let selectOptions=document.getElementById('select-options');
+        let btns=document.querySelectorAll('.btn');   
         let selectOption=document.querySelectorAll('.select-option');
 
-        let cardContainer=document.getElementById('cart-container')
         
         //!Crear cards para cada productos
-        productFunction(productsContainer,products);
+        productFunction(productsContainer,products,cart);
         
         //!Filtrar cards/productos por categoria
-        btnFilter(btns,products,productsContainer,selectOption)
-        
-        //!limpiar categoria
-        clearFilter(productsContainer,products,selectOption)
-
-        //!ocultar y mostrar las opciones de categorias
-        btnCategoriesFunction(btnCategoriesOpen,btnCategoriesClose,btnOptions)
-        
-        //Filtro por precio
-        //!Mostrar menu del select(ordenar por precio)
-        selectOptionsHide(select,selectOptions)
-        //!Funcion del select filter para ordenar por precio
-        selectOptionsFilter(selectOption,productsContainer,products)
-        cart()
+        btnFilter(btns,products,productsContainer,selectOption);
+       
     })
-    .catch(error=>alert(`No se han podido cargar los productos`))
+    .catch(error=>console.log(error))
 }
 
-let productFunction=(productsContainer,returnProducts)=>{
-
+let productFunction=(productsContainer,products,cart)=>{
     //Que se muestre el tag solo cuando utilice el filtro
     tag.innerHTML.length>=1&&productsContainer.appendChild(tagContainer)
 
-    returnProducts.forEach((product)=>{
-
+    products.forEach((product)=>{
         let divContent=document.createElement('div');
         divContent.innerHTML=`
         <article id="${product.alt}">
             <img src="${product.url}" alt="${product.alt}">
             <h2>${product.product}</h2>
             <p>$${product.price}</p>
-            <button id="${product.id}">Sumar al carrito</button>
+            <button id="${product.id}" value="${product.id}">Sumar al carrito</button>
         </article>
         `
         divContent.classList.add('products__product')
 
-        productsContainer.appendChild(divContent)     
- 
+        productsContainer.appendChild(divContent)   
     })
-
+    cart(products)
 }
 
-
-let btnCategoriesFunction=(btnCategories,btnCategoriesClose,btnOptions)=>{
-    btnCategories.addEventListener('click',()=>{
-        btnOptions.classList.toggle('options-hide');
-    })
-    btnCategoriesClose.addEventListener('click',()=>{
-        btnOptions.classList.toggle('options-hide')
-    })
-}
 
 let btnFilter=(btns,products,productsContainer,selectOption)=>{
+    let btnCategoriesOpen=document.getElementById('categories');
+    let btnCategoriesClose=document.getElementById('tittle-options-close');
+    let btnOptions=document.getElementById('options');
 
+    //!ocultar y mostrar las opciones de categorias
+    btnCategoriesFunction(btnCategoriesOpen,btnCategoriesClose,btnOptions)
     btns.forEach((btn)=>{
         btn.addEventListener('click',()=>{
             productsContainer.innerHTML='';
-
             //Agregar texto a tag, el mismo que la categoria
             tag.innerHTML=btn.innerHTML;
             let spanTag=document.createElement('span');
             spanTag.innerHTML='x'
             tag.appendChild(spanTag)
-
             productFunction(productsContainer,products.filter((p)=>p.category==btn.innerHTML))
-
             selectOptionsFilter(selectOption,productsContainer,products.filter((p)=>p.category==btn.innerHTML))
-   
         })
+        //!limpiar categoria
+        clearFilter(productsContainer,products,selectOption)
+    })
+        //Filtro por precio
+    //!Funcion del select filter para ordenar por precio
+    selectOptionsFilter(selectOption,productsContainer,products)
+    selectOptionsHide()
+}
 
+//! Abrir-cerrar
+let btnCategoriesFunction=(btnCategories,btnCategoriesClose,btnOptions)=>{
+    btnCategories.addEventListener('click',()=>{
+        btnOptions.classList.remove('options-hide');
+    })
+    btnCategoriesClose.addEventListener('click',()=>{
+        btnOptions.classList.add('options-hide')
     })
 }
+
 
 //!Limpiar filtro por tag
 let clearFilter=(productsContainer,products,selectOption)=>{
@@ -106,20 +90,11 @@ let clearFilter=(productsContainer,products,selectOption)=>{
         tag.innerHTML='';
         productsContainer.innerHTML='';
         productFunction(productsContainer,products);
-
-        selectOptionsFilter(selectOption,productsContainer,products)
+        selectOptionsFilter(selectOption,productsContainer,products);
     })
 }
 
-
-let selectOptionsHide=(select,selectOptions)=>{
-
-    select.addEventListener('click',()=>{
-        selectOptions.classList.toggle('select-options-hide')
-        
-    })
-}
-
+/*---------------------------Filter by price---------------------------*/
 
 let selectOptionsFilter=(selectOption,productsContainer,products)=>{
     selectOption.forEach((option)=>{
@@ -163,117 +138,38 @@ let selectOptionsFilter=(selectOption,productsContainer,products)=>{
     })
 }
 
-
-let cart=()=>{
-    let cardButtons=document.querySelectorAll('.products__product>article>button');
-    addToCart(cardButtons)
-}
-
-let addToCart=(cardbuttons)=>{
-    cardbuttons.forEach((btn)=>{
-
-        btn.addEventListener('click',()=>{
-            let btnAdd=document.getElementById(`${btn.id}`).parentElement;
-                const Toast = Swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 2000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                  toast.addEventListener('mouseenter', Swal.stopTimer)
-                  toast.addEventListener('mouseleave', Swal.resumeTimer)
-                }
-              })
-              
-              Toast.fire({
-                icon: 'success',
-                title: `${btnAdd.children.item(1).innerHTML} 
-                <span style="color: red;">Agregado al carrito!</span>`
-              })
-        })
+let selectOptionsHide=()=>{
+    let select=document.getElementById('select');
+    let selectOptions=document.getElementById('select-options');
+    select.addEventListener('click',()=>{
+        selectOptions.classList.toggle('select-options-hide')
     })
 }
 
 
-// let addToCart=(products)=>{
-//     let btn=document.querySelectorAll('.products__product>article>button');
-//     let getLocalStorage=JSON.parse(localStorage.getItem('productsNow'))
-
-//     let cardContainer=document.getElementById('cart-container')
-//     let newArray=[];
-//     getLocalStorage&&(newArray=[...getLocalStorage]);
-//     btn.forEach((b)=>{
-   
-//         b.addEventListener('click',()=>{
-//             let nameProduct=b.parentElement.querySelector('h2').innerHTML;
-//             const Toast = Swal.mixin({
-//                 toast: true,
-//                 position: 'top-end',
-//                 showConfirmButton: false,
-//                 timer: 2000,
-//                 timerProgressBar: true,
-//                 didOpen: (toast) => {
-//                   toast.addEventListener('mouseenter', Swal.stopTimer)
-//                   toast.addEventListener('mouseleave', Swal.resumeTimer)
-//                 }
-//               })
-              
-//               Toast.fire({
-//                 icon: 'success',
-//                 title: `${nameProduct} 
-//                 <span style="color: red;">Agregado al carrito!</span>`
-//               })
-
-
-//               newArray=[...newArray,products.find(p=>p.alt==b.parentElement.id)];
-          
-//               console.log(newArray)
-//               localStorage.setItem('productsNow',JSON.stringify(newArray))
-
-//               cart(cardContainer,newArray)
-              
-//         })
-
-//     })
-// }
-
-// let cart=(cardContainer,cartProduct)=>{
-//     cardContainer.innerHTML='';
-//     cartProduct.forEach((product)=>{
-//         let div=document.createElement('div')
-//         div.innerHTML=`
-//         <div>
-
-//             <img src="${product.url}" alt="${product.alt}">
-//             <h2>${product.product}</h2>
-//             <button>-</button>
-//             <p>${product.quantity}</p>
-//             <button>+</button>
-//             <button id="${product.id}">Eliminar</button>
-//         </div>
-//         `  
-//         cardContainer.appendChild(div)
-
-//     })
-// }
-
-// let openCart=()=>{
-//     let btnCart=document.getElementById('cart-btn');
-//     let btnClose=document.getElementById('cart-open');
-//     let cartStyle=document.getElementById('cart-style');
-//     btnCart.addEventListener('click',()=>{
-//         cartStyle.classList.remove('hide-cart')
-//         console.log('hola')
-//     })
-//     btnClose.addEventListener('click',()=>{
-//         cartStyle.classList.add('hide-cart')
-//     })
-// }
-//!Acaaaa 
 
 
 export{
     groupFunctions
 }
 
+
+
+
+// const Toast = Swal.mixin({
+//     toast: true,
+//     position: 'top-end',
+//     showConfirmButton: false,
+//     timer: 2000,
+//     timerProgressBar: true,
+//     didOpen: (toast) => {
+//       toast.addEventListener('mouseenter', Swal.stopTimer)
+//       toast.addEventListener('mouseleave', Swal.resumeTimer)
+//     }
+//   })
+  
+//   Toast.fire({
+//     icon: 'success',
+//     title: `${btnAdd.children.item(1).innerHTML} 
+//     <span style="color: red;">Agregado al carrito!</span>`
+//   })
