@@ -5,7 +5,7 @@ let btnClose=document.getElementById('cart-open');
 let cartStyle=document.getElementById('cart-style');
 let cartContainer=document.getElementById('cart-container');
 let inLocalStorage=JSON.parse(localStorage.getItem('products'));
-
+console.log(counterInfo)
 class Cart{
     constructor(counter) {
         this.object;
@@ -29,8 +29,12 @@ class Cart{
 
     }
     addToCart(btnValue,object){
-        this.productsInLocal.push(object.find(p=>p.id==btnValue))
+        const newArray=[...this.productsInLocal]
+        let lot=this.productsInLocal.find(p=>p.id==btnValue);
+        lot.lot>0?(
+        this.productsInLocal.push(object.find(p=>p.id==btnValue)),
         this.productsInLocal.find(p=>p.id==btnValue&&(p.quantity=1,p.lot=p.lot-1))
+        ):alert('Sin Stock!!!')
   
         return this.productsInLocal
     }
@@ -60,11 +64,19 @@ class Cart{
         return this.productsInLocal
     }
     toSubtractCounter(btnValue){
+        const newArray=[...this.productsInLocal]
+        let lot=this.productsInLocal.find(p=>p.id==btnValue);
+        lot.quantity>1?
         this.productsInLocal.find(p=>p.id==btnValue&&(p.quantity-=1,p.lot=p.lot+1))
+        :false
         return this.productsInLocal
     }
     toAddCounter(btnValue){
+        const newArray=[...this.productsInLocal]
+        let lot=this.productsInLocal.find(p=>p.id==btnValue);
+        lot.lot>0?
         this.productsInLocal.find(p=>p.id==btnValue&&(p.quantity+=1,p.lot=p.lot-1))
+        :alert('Sin Stock!!!')
         return this.productsInLocal
     }
     buyAlert(message){
@@ -85,13 +97,16 @@ class Cart{
             title: `${message}`
           })
     }
+    cartCounter(domP){
+        domP.innerHTML=this.productsInLocal.length;
+    }
 }
 
 const cartClass=new Cart(0)
 
 const cart=(products=inLocalStorage)=>{
         let cardButtons=document.querySelectorAll('.btn-add');
-
+        cartClass.cartCounter(counterInfo)
         cartClass.toReloadProducts(cartClass.save(),cartContainer)
 
         cardButtons.forEach(btn=>{
@@ -108,14 +123,17 @@ const cart=(products=inLocalStorage)=>{
                 !JSON.parse(localStorage.getItem('products')).some(p=>p.id==btnValue)?
                 (cartClass.addToCart(btnValue,products),
                 cartClass.buyAlert(messageOne),
-                cartClass.toReloadProducts(cartClass.save(),cartContainer),
                 sumAndSubtractProduct(cartClass)
                 ):(cartClass.toAddCounter(btnValue),
                 cartClass.buyAlert(messageTwo),
                 cartClass.toReloadCounterProduct(cartCard,btnValue)
                 )
+                cartClass.cartCounter(counterInfo)
+                cartClass.toReloadProducts(cartClass.save(),cartContainer)
                 deleteProduct(cartClass)
                 cartClass.save()
+
+                
                 
             })
         })
