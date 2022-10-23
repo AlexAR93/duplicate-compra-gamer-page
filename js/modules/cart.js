@@ -5,13 +5,13 @@ let btnClose=document.getElementById('cart-open');
 let cartStyle=document.getElementById('cart-style');
 let cartContainer=document.getElementById('cart-container');
 let inLocalStorage=JSON.parse(localStorage.getItem('products'));
-console.log(counterInfo)
+let divTotalPrice=document.querySelector('#cart-total-price > p')
 class Cart{
     constructor(counter) {
         this.object;
         this.productsInLocal=!inLocalStorage?[]:[...JSON.parse(localStorage.getItem('products'))];
         this.counter=counter+1;
-
+        this.totalPrice=0;
     }   
     save(){
         localStorage.setItem('products',JSON.stringify(this.productsInLocal))
@@ -29,12 +29,8 @@ class Cart{
 
     }
     addToCart(btnValue,object){
-        const newArray=[...this.productsInLocal]
-        let lot=this.productsInLocal.find(p=>p.id==btnValue);
-        lot.lot>0?(
-        this.productsInLocal.push(object.find(p=>p.id==btnValue)),
+        this.productsInLocal.push(object.find(p=>p.id==btnValue))
         this.productsInLocal.find(p=>p.id==btnValue&&(p.quantity=1,p.lot=p.lot-1))
-        ):alert('Sin Stock!!!')
   
         return this.productsInLocal
     }
@@ -55,28 +51,21 @@ class Cart{
             cartContainer.appendChild(div)
         })
     }
-    toReloadCounterProduct(cardCounter,btnValue){
-        cardCounter.innerHTML=this.productsInLocal.find(p=>p.id==btnValue).quantity;
-    }
     toDeleteCart(btnValue,cartCard){
         this.productsInLocal.splice(parseInt(this.productsInLocal.findIndex(p=>p.id==btnValue)),1)
         cartCard.parentElement.removeChild(cartCard)
         return this.productsInLocal
     }
     toSubtractCounter(btnValue){
-        const newArray=[...this.productsInLocal]
         let lot=this.productsInLocal.find(p=>p.id==btnValue);
-        lot.quantity>1?
+        lot.quantity>1&&
         this.productsInLocal.find(p=>p.id==btnValue&&(p.quantity-=1,p.lot=p.lot+1))
-        :false
         return this.productsInLocal
     }
     toAddCounter(btnValue){
-        const newArray=[...this.productsInLocal]
         let lot=this.productsInLocal.find(p=>p.id==btnValue);
         lot.lot>0?
-        this.productsInLocal.find(p=>p.id==btnValue&&(p.quantity+=1,p.lot=p.lot-1))
-        :alert('Sin Stock!!!')
+        this.productsInLocal.find(p=>p.id==btnValue&&(p.quantity+=1,p.lot=p.lot-1)):alert('Sin stock!!!')
         return this.productsInLocal
     }
     buyAlert(message){
@@ -97,8 +86,16 @@ class Cart{
             title: `${message}`
           })
     }
+    toReloadCounterProduct(cardCounter,btnValue){
+        cardCounter.innerHTML=this.productsInLocal.find(p=>p.id==btnValue).quantity;
+    }
     cartCounter(domP){
         domP.innerHTML=this.productsInLocal.length;
+    }
+    toSumPrice(){
+        const price=this.productsInLocal.map(p=>p.price*p.quantity)
+        this.totalPrice=price.reduce((a,b)=>a+ b,0);
+        return this.totalPrice
     }
 }
 
@@ -106,9 +103,10 @@ const cartClass=new Cart(0)
 
 const cart=(products=inLocalStorage)=>{
         let cardButtons=document.querySelectorAll('.btn-add');
-        cartClass.cartCounter(counterInfo)
-        cartClass.toReloadProducts(cartClass.save(),cartContainer)
 
+        cartClass.toReloadProducts(cartClass.save(),cartContainer)
+        cartClass.cartCounter(counterInfo)
+        totalCartPrice()
         cardButtons.forEach(btn=>{
             btn.addEventListener('click',()=>{
             
@@ -119,21 +117,21 @@ const cart=(products=inLocalStorage)=>{
             <span style="color: red;">Agregado!</span>`;
 
                 const btnValue=parseInt(btn.getAttribute("value"));
-                let cartCard=document.getElementById(`quantity${btnValue}`)
+
                 !JSON.parse(localStorage.getItem('products')).some(p=>p.id==btnValue)?
                 (cartClass.addToCart(btnValue,products),
                 cartClass.buyAlert(messageOne),
+                cartClass.toReloadProducts(cartClass.save(),cartContainer),
                 sumAndSubtractProduct(cartClass)
-                ):(cartClass.toAddCounter(btnValue),
-                cartClass.buyAlert(messageTwo),
-                cartClass.toReloadCounterProduct(cartCard,btnValue)
                 )
+                :(cartClass.toAddCounter(btnValue),
+                cartClass.buyAlert(messageTwo)
+                )
+
                 cartClass.cartCounter(counterInfo)
-                cartClass.toReloadProducts(cartClass.save(),cartContainer)
                 deleteProduct(cartClass)
                 cartClass.save()
-
-                
+                totalCartPrice()
                 
             })
         })
@@ -165,6 +163,7 @@ let sumAndSubtractProduct=()=>{
             console.log(cartContainer)
             cartClass.toReloadCounterProduct(cartCard,btnValue)
             cartClass.save()
+            totalCartPrice()
         })
     })
     sumBtn.forEach(btn=>{
@@ -176,6 +175,7 @@ let sumAndSubtractProduct=()=>{
             console.log(cartContainer)
             cartClass.toReloadCounterProduct(cartCard,btnValue)
             cartClass.save()
+            totalCartPrice()
         })
     })
 }
@@ -186,12 +186,18 @@ const deleteProduct=(cartClass)=>{
     btn.addEventListener('click',()=>{  
         const btnValue=parseInt(btn.getAttribute('value'))
         const cartCard=document.getElementById(`product${btnValue}`)
-        
-        cartClass.save()
+
         cartClass.toDeleteCart(btnValue,cartCard)
+        cartClass.cartCounter(counterInfo)
         cartClass.save()
+        totalCartPrice()
     })
     })
+}
+
+const totalCartPrice=()=>{
+    console.log(divTotalPrice)
+    divTotalPrice.innerHTML=cartClass.toSumPrice()
 }
 
 export{
