@@ -1,197 +1,210 @@
 
-let productsInLocal=JSON.parse(localStorage.getItem('products'));
+// ! AQUIII
 
-let cart=(products=productsInLocal)=>{
-    let newArray=[];
-    productsInLocal&&(newArray=[...productsInLocal])
-    // localStoragee&&deleteProduct(localStoragee)
-    localStorage.setItem('products',JSON.stringify(newArray))
-    openCloseCart()
+// let productsInLocal=JSON.parse(localStorage.getItem('products'));
+let counterInfo=document.getElementById('counter')
+let btnCart=document.getElementById('cart-btn');
+let btnClose=document.getElementById('cart-open');
+let cartStyle=document.getElementById('cart-style');
+let cartContainer=document.getElementById('cart-container');
+let inLocalStorage=JSON.parse(localStorage.getItem('products'));
+let divTotalPrice=document.querySelector('#cart-total-price > p')
+class Cart{
+    constructor(counter) {
+        this.object;
+        this.productsInLocal=!inLocalStorage?[]:[...JSON.parse(localStorage.getItem('products'))];
+        this.counter=counter+1;
+        this.totalPrice=0;
+    }   
+    save(){
+        localStorage.setItem('products',JSON.stringify(this.productsInLocal))
+        
+        return this.productsInLocal
+    }
+    toShowCart(cartStyle){
+
+        return cartStyle.classList.remove('hide-cart')
+
+    }
+    toHideCart(cartStyle){
   
-    cartProductDom(newArray)
-    addToCart(products,newArray);
+        return cartStyle.classList.add('hide-cart')
 
+    }
+    addToCart(btnValue,object){
+        this.productsInLocal.push(object.find(p=>p.id==btnValue))
+        this.productsInLocal.find(p=>p.id==btnValue&&(p.quantity=1,p.lot=p.lot-1))
+  
+        return this.productsInLocal
+    }
+    toReloadProducts(productsInCart,cartContainer){
+        cartContainer.innerHTML='';
+        productsInCart.forEach((product)=>{
+            let div=document.createElement('div')
+            div.innerHTML=`
+                
+                <img src="${product.url}" alt="${product.alt}">
+                <h2>${product.product}</h2>
+                <button class="btn-subtraction" value="${product.id}">-</button>
+                <p class='quantity' id='quantity${product.id}'>${product.quantity}</p>
+                <button class="btn-sum" value="${product.id}">+</button>
+                <button class="btn-delete" value="${product.id}">Eliminar</button>
+            ` 
+            div.setAttribute('id',`product${product.id}`)
+            cartContainer.appendChild(div)
+        })
+    }
+    toDeleteCart(btnValue,cartCard){
+        this.productsInLocal.splice(parseInt(this.productsInLocal.findIndex(p=>p.id==btnValue)),1)
+        cartCard.parentElement.removeChild(cartCard)
+        return this.productsInLocal
+    }
+    toSubtractCounter(btnValue){
+        let lot=this.productsInLocal.find(p=>p.id==btnValue);
+        lot.quantity>1&&
+        this.productsInLocal.find(p=>p.id==btnValue&&(p.quantity-=1,p.lot=p.lot+1))
+        return this.productsInLocal
+    }
+    toAddCounter(btnValue){
+        let lot=this.productsInLocal.find(p=>p.id==btnValue);
+        lot.lot>0?
+        this.productsInLocal.find(p=>p.id==btnValue&&(p.quantity+=1,p.lot=p.lot-1)):alert('Sin stock!!!')
+        return this.productsInLocal
+    }
+    buyAlert(message){
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer)
+              toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+          })
+        
+          Toast.fire({
+            icon: 'success',
+            title: `${message}`
+          })
+    }
+    toReloadCounterProduct(cardCounter,btnValue){
+        cardCounter.innerHTML=this.productsInLocal.find(p=>p.id==btnValue).quantity;
+    }
+    cartCounter(domP){
+        domP.innerHTML=this.productsInLocal.length;
+    }
+    toSumPrice(){
+        const price=this.productsInLocal.map(p=>p.price*p.quantity)
+        this.totalPrice=price.reduce((a,b)=>a+ b,0);
+        return this.totalPrice
+    }
 }
 
-let openCloseCart=()=>{
-    let btnCart=document.getElementById('cart-btn');
-    let btnClose=document.getElementById('cart-open');
-    let cartStyle=document.getElementById('cart-style');
+const cartClass=new Cart(0)
+
+const cart=(products=inLocalStorage)=>{
+        let cardButtons=document.querySelectorAll('.btn-add');
+
+        cartClass.toReloadProducts(cartClass.save(),cartContainer)
+        cartClass.cartCounter(counterInfo)
+        totalCartPrice()
+        cardButtons.forEach(btn=>{
+            btn.addEventListener('click',()=>{
+            
+            let messageOne=`${btn.parentNode.children.item(1).innerHTML}
+            <span style="color: red;">Agregado al carrito!</span>`;
+            let messageTwo=`<span style="color: red;">Otro:
+            </span>${btn.parentNode.children.item(1).innerHTML}
+            <span style="color: red;">Agregado!</span>`;
+
+                const btnValue=parseInt(btn.getAttribute("value"));
+
+                let cartCard=document.getElementById(`quantity${btnValue}`);
+
+                
+                !JSON.parse(localStorage.getItem('products')).some(p=>p.id==btnValue)?
+                (
+                cartClass.addToCart(btnValue,products),
+                cartClass.buyAlert(messageOne)  
+                )
+                :(cartClass.toAddCounter(btnValue),
+                cartClass.toReloadCounterProduct(cartCard,btnValue),
+                cartClass.buyAlert(messageTwo)
+                )
+                cartClass.toReloadProducts(cartClass.save(),cartContainer)
+                sumAndSubtractProduct(cartClass)  
+                cartClass.cartCounter(counterInfo)
+                deleteProduct(cartClass)
+                cartClass.save()
+                totalCartPrice()
+                
+            })
+        })
+        sumAndSubtractProduct(cartClass)
+        openCloseCart(cartClass)
+        deleteProduct(cartClass)
+}
+
+let openCloseCart=(cartClass)=>{
     btnCart.addEventListener('click',()=>{
-        cartStyle.classList.remove('hide-cart')
+        cartClass.toShowCart(cartStyle)
 
     })
     btnClose.addEventListener('click',()=>{
-        cartStyle.classList.add('hide-cart')
-    })
-}
-//!ACAAA 2
-let addToCart=(products,newArray)=>{
-    let cardButtons=document.querySelectorAll('.products__product>article>button');
-    let cardCunter=document.getElementById('counter-cart');
-    let p=document.createElement('p');
-    deleteProduct(newArray,cartCounter,cardCunter,p)
-    sumAndSubtractProducts(newArray)
-    cartCounter(newArray,cardCunter,p)
-    cardButtons.forEach(btn=>{
-        btn.addEventListener('click',()=>{
-            let btnAdd=document.getElementById(`${btn.id}`).parentElement;
-            let be=newArray.some(p=>p.id==btn.id);
-
-            let messageOne=`${btnAdd.children.item(1).innerHTML}
-            <span style="color: red;">Agregado al carrito!</span>`;
-            let messageTwo=`<span style="color: red;">Otro:
-            </span>${btnAdd.children.item(1).innerHTML}
-            <span style="color: red;">Agregado!</span>`;
-
-            products=products.map(p=>p={...p,quantity:1})
-            
-            if(be==true){
-                newArray=[...JSON.parse(localStorage.getItem('products'))]
-                let lot=newArray.find(p=>p.id==btn.id);
-
-                lot.lot>0?(newArray.find(p=>p.id==btn.id&&(p.lot=p.lot-1)),
-                newArray.find(p=>p.id==btn.id&&(p.quantity=p.quantity+1)),
-                
-                localStorage.setItem(`products`,JSON.stringify(newArray)),
-                cartProductDom(newArray),
-                sumAndSubtractProducts(newArray),
-                deleteProduct(newArray,cartCounter,cardCunter,p),
-                buyAlert(messageTwo)):alert('Sin stock!!')
-                return
-            }
-
-            JSON.parse(localStorage.getItem('products'))&&(newArray=[...JSON.parse(localStorage.getItem('products')),products.find(p=>p.id==btn.id)]);
-            newArray.find(p=>p.id==btn.id&&(p=p.lot=p.lot-1));
-            cartCounter(newArray,cardCunter,p)
-       
-            cartProductDom(newArray)
-  
-            deleteProduct(newArray,cartCounter,cardCunter,p)
-            localStorage.setItem(`products`,JSON.stringify(newArray));
-            sumAndSubtractProducts(newArray)
-            buyAlert(messageOne)
-
-        })
-})
-}
-
-let cartProductDom=(newArray)=>{
-    let cardContainer=document.getElementById('cart-container');
-    cardContainer.innerHTML='';
-    newArray.forEach((product)=>{
-        let div=document.createElement('div')
-        div.innerHTML=`
-            
-            <img src="${product.url}" alt="${product.alt}">
-            <h2>${product.product}</h2>
-            <button class="btn-subtraction" value="${product.id}">-</button>
-            <p class='quantity' id='quantity${product.id}'>${product.quantity}</p>
-            <button class="btn-sum" value="${product.id}">+</button>
-            <button class="btn-delete" id="${product.id}">Eliminar</button>
-        ` 
-        div.setAttribute('id',`product${product.id}`)
-        cardContainer.appendChild(div)
-    })
-
-}
-
-let deleteProduct=(newArray,cartCounter,cardCunter,p)=>{
-    let btnDelete=document.querySelectorAll('.btn-delete')
-    btnDelete.forEach((btn)=>{
-        btn.addEventListener('click',()=>{  
-            let productContainer=document.getElementById(`product${btn.id}`)
-            let cartContainer=document.querySelectorAll('.cart-container>div')
-            let cartContainerArray=Array.from(cartContainer)
-            let productIndex=cartContainerArray.findIndex(p=>p.id==productContainer.id);
-            newArray.splice(productIndex,1)
-            productContainer.parentElement.removeChild(productContainer)
-            localStorage.setItem('products',JSON.stringify(newArray))
-
-            cartCounter(newArray,cardCunter,p)
-        })
+        cartClass.toHideCart(cartStyle)
     })
 }
 
-let cartCounter=(newArray,cardCunter,p)=>{
-    let counter=newArray.length;
-    p.innerHTML=counter;
-    cardCunter.appendChild(p)
-}
-
-let buyAlert=(message)=>{
-    const Toast = Swal.mixin({
-        toast: true,
-        position: 'top-end',
-        showConfirmButton: false,
-        timer: 2000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-          toast.addEventListener('mouseenter', Swal.stopTimer)
-          toast.addEventListener('mouseleave', Swal.resumeTimer)
-        }
-      })
-    
-      Toast.fire({
-        icon: 'success',
-        title: `${message}`
-      })
-}
-
-let sumAndSubtractProducts=(newArray)=>{
+let sumAndSubtractProduct=()=>{
+    //! subtract and sum
     let sumBtn=document.querySelectorAll('.btn-sum');
-    let subtractBtn=document.querySelectorAll('.btn-subtraction');
-    sumProductFunction(sumBtn,newArray)
-    subtractProductFunction(subtractBtn,newArray)
-}
-//! ACA x2 
-const sumProductFunction=(sumBtn,newArray)=>{
-    sumBtn.forEach(btn=>{
-        btn.addEventListener('click',()=>{
-            // aca
-            let lot=newArray.find(p=>p.id==parseInt(btn.getAttribute("value")));
-
-            let productContainer=document.getElementById(`product${parseInt(btn.getAttribute("value"))}`)
-            let cartContainer=document.querySelectorAll('.cart-container>div')
-            let cartContainerArray=Array.from(cartContainer)
-            let productIndex=cartContainerArray.findIndex(p=>p.id==productContainer.id);
-            
-            let btnFather=document.getElementById(`quantity${parseInt(btn.getAttribute("value"))}`);
-            lot.lot>0?(
-            newArray.find(p=>p.id==parseInt(btn.getAttribute("value"))&&(p.lot=p.lot-1)),
-            newArray.find(p=>p.id==parseInt(btn.getAttribute("value"))&&(p.quantity=p.quantity+1)),
-            localStorage.setItem('products',JSON.stringify(newArray))):alert('Sin stock!!')
- 
-         
-            btnFather.innerHTML=newArray[productIndex].quantity;
-            
-        })
-    }
-    )
-}
-let subtractProductFunction=(subtractBtn,newArray)=>{
+    let subtractBtn=document.querySelectorAll('.btn-subtraction'); 
     subtractBtn.forEach(btn=>{
+
         btn.addEventListener('click',()=>{
-        // aca
-        let lot=newArray.find(p=>p.id==parseInt(btn.getAttribute("value")));
+            let btnValue=parseInt(btn.getAttribute("value"));
+            let cartCard=document.getElementById(`quantity${btnValue}`)
+            cartClass.toSubtractCounter(btnValue)
 
-        let productContainer=document.getElementById(`product${parseInt(btn.getAttribute("value"))}`)
-        let cartContainer=document.querySelectorAll('.cart-container>div')
-        let cartContainerArray=Array.from(cartContainer)
-        let productIndex=cartContainerArray.findIndex(p=>p.id==productContainer.id);
-      
-            let btnFather=document.getElementById(`quantity${parseInt(btn.getAttribute("value"))}`);
-            lot.lot<9?(
-            newArray.find(p=>p.id==parseInt(btn.getAttribute("value"))&&(p.lot=p.lot+1)),
-            newArray.find(p=>p.id==parseInt(btn.getAttribute("value"))&&(p.quantity=p.quantity-1)),
-            localStorage.setItem('products',JSON.stringify(newArray))):false
- 
-
-            btnFather.innerHTML=newArray[productIndex].quantity;
-
+            cartClass.toReloadCounterProduct(cartCard,btnValue)
+            cartClass.save()
+            totalCartPrice()
         })
-    }
-    )
+    })
+    sumBtn.forEach(btn=>{
+
+        btn.addEventListener('click',()=>{
+            let btnValue=parseInt(btn.getAttribute("value"));
+            let cartCard=document.getElementById(`quantity${btnValue}`)
+            cartClass.toAddCounter(btnValue)
+
+            cartClass.toReloadCounterProduct(cartCard,btnValue)
+            cartClass.save()
+            totalCartPrice()
+        })
+    })
+}
+
+const deleteProduct=(cartClass)=>{
+    const btnDelete=document.querySelectorAll('.btn-delete');
+    btnDelete.forEach((btn)=>{
+    btn.addEventListener('click',()=>{  
+        const btnValue=parseInt(btn.getAttribute('value'))
+        const cartCard=document.getElementById(`product${btnValue}`)
+
+
+        cartClass.toDeleteCart(btnValue,cartCard)
+        cartClass.cartCounter(counterInfo)
+        cartClass.save()
+        totalCartPrice()
+    })
+    })
+}
+
+const totalCartPrice=()=>{
+    divTotalPrice.innerHTML=cartClass.toSumPrice()
 }
 
 export{

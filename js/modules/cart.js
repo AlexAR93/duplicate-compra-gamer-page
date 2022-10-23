@@ -1,3 +1,6 @@
+
+// ! AQUIII
+
 // let productsInLocal=JSON.parse(localStorage.getItem('products'));
 let counterInfo=document.getElementById('counter')
 let btnCart=document.getElementById('cart-btn');
@@ -29,7 +32,7 @@ class Cart{
 
     }
     addToCart(btnValue,object){
-        this.productsInLocal.push(object.find(p=>p.id==btnValue))
+        this.productsInLocal.push(structuredClone(object.find(p=>p.id==btnValue)))
         this.productsInLocal.find(p=>p.id==btnValue&&(p.quantity=1,p.lot=p.lot-1))
   
         return this.productsInLocal
@@ -118,16 +121,20 @@ const cart=(products=inLocalStorage)=>{
 
                 const btnValue=parseInt(btn.getAttribute("value"));
 
+                let cartCard=document.getElementById(`quantity${btnValue}`);
+
+                
                 !JSON.parse(localStorage.getItem('products')).some(p=>p.id==btnValue)?
-                (cartClass.addToCart(btnValue,products),
-                cartClass.buyAlert(messageOne),
-                cartClass.toReloadProducts(cartClass.save(),cartContainer),
-                sumAndSubtractProduct(cartClass)
+                (
+                cartClass.addToCart(btnValue,products),
+                cartClass.buyAlert(messageOne)  
                 )
                 :(cartClass.toAddCounter(btnValue),
+                cartClass.toReloadCounterProduct(cartCard,btnValue),
                 cartClass.buyAlert(messageTwo)
                 )
-
+                cartClass.toReloadProducts(cartClass.save(),cartContainer)
+                sumAndSubtractProduct(cartClass)  
                 cartClass.cartCounter(counterInfo)
                 deleteProduct(cartClass)
                 cartClass.save()
@@ -160,7 +167,7 @@ let sumAndSubtractProduct=()=>{
             let btnValue=parseInt(btn.getAttribute("value"));
             let cartCard=document.getElementById(`quantity${btnValue}`)
             cartClass.toSubtractCounter(btnValue)
-            console.log(cartContainer)
+
             cartClass.toReloadCounterProduct(cartCard,btnValue)
             cartClass.save()
             totalCartPrice()
@@ -172,7 +179,7 @@ let sumAndSubtractProduct=()=>{
             let btnValue=parseInt(btn.getAttribute("value"));
             let cartCard=document.getElementById(`quantity${btnValue}`)
             cartClass.toAddCounter(btnValue)
-            console.log(cartContainer)
+
             cartClass.toReloadCounterProduct(cartCard,btnValue)
             cartClass.save()
             totalCartPrice()
@@ -187,6 +194,7 @@ const deleteProduct=(cartClass)=>{
         const btnValue=parseInt(btn.getAttribute('value'))
         const cartCard=document.getElementById(`product${btnValue}`)
 
+
         cartClass.toDeleteCart(btnValue,cartCard)
         cartClass.cartCounter(counterInfo)
         cartClass.save()
@@ -196,7 +204,6 @@ const deleteProduct=(cartClass)=>{
 }
 
 const totalCartPrice=()=>{
-    console.log(divTotalPrice)
     divTotalPrice.innerHTML=cartClass.toSumPrice()
 }
 

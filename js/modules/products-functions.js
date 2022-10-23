@@ -77,6 +77,7 @@ const renderDom=(products,cart)=>{
             <h2>${product.product}</h2>
             <p>$${product.price}</p>
             <button class="btn-add" id="btn${product.id}" value="${product.id}">Sumar al carrito</button>
+            <button class="btn-clear" value="${product.id}">Eliminar</button>
         </article>
         `
         divContent.classList.add('products__product')
