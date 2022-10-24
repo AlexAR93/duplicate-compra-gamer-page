@@ -54,16 +54,13 @@ class ProductsInDom{
     }
 }
 
-let groupFunctions=(products,cart)=>{
+const groupFunctions=(products,cart)=>{
     const productClass=new ProductsInDom(products)
     productFunction(productClass,cart);  
-      
-
 }
 
-let productFunction=(productClass,cart)=>{
-    renderDom(productClass.getByOrder(0),cart)
-     
+const productFunction=(productClass,cart)=>{
+    renderDom(productClass.getByOrder(0),cart) 
     btnFilters(productClass,cart)
 }
 const renderDom=(products,cart)=>{ 
@@ -77,17 +74,12 @@ const renderDom=(products,cart)=>{
             <h2>${product.product}</h2>
             <p>$${product.price}</p>
             <button class="btn-add" id="btn${product.id}" value="${product.id}">Sumar al carrito</button>
-        </article>
-        `
+        </article>`
         divContent.classList.add('products__product')
-
         productsContainer.appendChild(divContent) 
-
     })
-
     cart(products)  
 }
-
 
 const btnFilters=(products,cart)=>{
     btnCategoriesShow()
@@ -95,20 +87,9 @@ const btnFilters=(products,cart)=>{
     btnFilter(products,cart)
 }
 
-
-let btnFilter=(products,cart)=>{
-
+const btnFilter=(products,cart)=>{
     btns.forEach((btn)=>{
-        btn.addEventListener('click',()=>{
-            
-            //Agregar texto a tag, el mismo que la categoria
-            tag.innerHTML=btn.innerHTML;
-            let spanTag=document.createElement('span');
-            spanTag.innerHTML='x'
-            tag.appendChild(spanTag)
-            renderDom(products.getByCategory(btn.innerHTML),cart)
-        })
-
+        btn.addEventListener('click',e=>filterClickEvent(e,products,cart))
     })
     clearFilter(products.getByOrder(0),cart)
         //Filtro por precio
@@ -116,39 +97,37 @@ let btnFilter=(products,cart)=>{
     selectOptionsFilter(products,cart)
 }
 
-let btnCategoriesShow=()=>{
-    btnCategoriesOpen.addEventListener('click',()=>{
-        btnOptions.classList.remove('options-hide');
-    })
-    btnCategoriesClose.addEventListener('click',()=>{
-        btnOptions.classList.add('options-hide')
-    })
+const filterClickEvent=(e,products,cart)=>{           
+    //Agregar texto a tag, el mismo que la categoria
+    tag.innerHTML=e.target.innerHTML;
+    const spanTag=document.createElement('span');
+    spanTag.innerHTML='x'
+    tag.appendChild(spanTag)
+    renderDom(products.getByCategory(e.target.innerHTML),cart)
 }
 
+const btnCategoriesShow=()=>{
+    btnCategoriesOpen.addEventListener('click',()=>btnOptions.classList.remove('options-hide'))
+    btnCategoriesClose.addEventListener('click',()=>btnOptions.classList.add('options-hide'))
+}
 
-let clearFilter=(products,cart)=>{
+const clearFilter=(products,cart)=>{
     tag.addEventListener('click',()=>{
         tag.innerHTML='';
         renderDom(products,cart)
     })
 }
-
 // /*---------------------------Filter by price---------------------------*/
-
-let selectOptionsFilter=(products,cart)=>(
+const selectOptionsFilter=(products,cart)=>(
     selectOption.forEach((option)=>
-        option.addEventListener('click',()=>{
-            renderDom(products.getByOrder(option.value),cart)
-        })
+        option.addEventListener('click',()=>renderDom(products.getByOrder(option.value),cart))
     )
 )
 
-let selectOptionsShow=()=>{
-    let select=document.getElementById('select');
-    let selectOptions=document.getElementById('select-options');
-    select.addEventListener('click',()=>{
-        selectOptions.classList.toggle('select-options-hide')
-    })
+const selectOptionsShow=()=>{
+    const select=document.getElementById('select');
+    const selectOptions=document.getElementById('select-options');
+    select.addEventListener('click',()=>selectOptions.classList.toggle('select-options-hide'))
 }
 
 export{

@@ -1,23 +1,19 @@
-
-// ! AQUIII
-
-// let productsInLocal=JSON.parse(localStorage.getItem('products'));
-let counterInfo=document.getElementById('counter')
-let btnCart=document.getElementById('cart-btn');
-let btnClose=document.getElementById('cart-open');
-let cartStyle=document.getElementById('cart-style');
-let cartContainer=document.getElementById('cart-container');
-let inLocalStorage=JSON.parse(localStorage.getItem('products'));
-let divTotalPrice=document.querySelector('#cart-total-price > p')
+'use strict'
+const counterInfo=document.getElementById('counter')
+const btnCart=document.getElementById('cart-btn');
+const btnClose=document.getElementById('cart-open');
+const cartStyle=document.getElementById('cart-style');
+const cartContainer=document.getElementById('cart-container');
+const inLocalStorage=JSON.parse(localStorage.getItem('products'));
+const divTotalPrice=document.querySelector('#cart-total-price > p')
 class Cart{
     constructor() {
         this.object;
         this.productsInLocal=!inLocalStorage?[]:[...JSON.parse(localStorage.getItem('products'))];
-        this.totalPrice=0;
+        this.totalPrice;
     }   
     save(){
         localStorage.setItem('products',JSON.stringify(this.productsInLocal))
-        
         return this.productsInLocal
     }
     toShowCart(cartStyle){
@@ -26,9 +22,7 @@ class Cart{
 
     }
     toHideCart(cartStyle){
-  
         return cartStyle.classList.add('hide-cart')
-
     }
     addToCart(btnValue,object,message){
         this.productsInLocal.push(structuredClone(object.find(p=>p.id==btnValue)))
@@ -39,9 +33,8 @@ class Cart{
     toReloadProducts(productsInCart,cartContainer){
         cartContainer.innerHTML='';
         productsInCart.forEach((product)=>{
-            let div=document.createElement('div')
-            div.innerHTML=`
-                
+            const div=document.createElement('div')
+            div.innerHTML=`       
                 <img src="${product.url}" alt="${product.alt}">
                 <h2>${product.product}</h2>
                 <button class="btn-subtraction" value="${product.id}">-</button>
@@ -53,24 +46,27 @@ class Cart{
             cartContainer.appendChild(div)
         })
     }
-    toDeleteCart(btnValue,cartCard){
+    toDeleteCart(btnValue,cartCard,message){
         this.productsInLocal.splice(parseInt(this.productsInLocal.findIndex(p=>p.id==btnValue)),1)
         cartCard.parentElement.removeChild(cartCard)
-        return this.productsInLocal
+        buyAlert(message)
+    
     }
-    toSubtractCounter(btnValue){
-        let lot=this.productsInLocal.find(p=>p.id==btnValue);
-        lot.quantity>1&&
-        this.productsInLocal.find(p=>p.id==btnValue&&(p.quantity-=1,p.lot=p.lot+1))
-        return this.productsInLocal
+    toSubtractCounter(btnValue,message){
+        const lot=this.productsInLocal.find(p=>p.id==btnValue);
+        lot.quantity>1&&(
+        this.productsInLocal.find(p=>p.id==btnValue&&(p.quantity-=1,p.lot=p.lot+1)),
+        buyAlert(message)
+        )
+
     }
-    toAddCounter(btnValue,message){
-        let lot=this.productsInLocal.find(p=>p.id==btnValue);
+    toAddCounter(btnValue,message,messageTwo){
+        const lot=this.productsInLocal.find(p=>p.id==btnValue);
         lot.lot>0?(
         this.productsInLocal.find(p=>p.id==btnValue&&(p.quantity+=1,p.lot=p.lot-1)),
         buyAlert(message)
-        ):alert('Sin stock!!!')
-        return this.productsInLocal
+        ):buyAlert(messageTwo)
+   
     }
     toReloadCounterProduct(cardCounter,btnValue){
         cardCounter.innerHTML=this.productsInLocal.find(p=>p.id==btnValue).quantity;
@@ -94,41 +90,41 @@ const cart=(products=inLocalStorage)=>{
         cartClass.cartCounter(counterInfo)
         totalCartPrice()
         cardButtons.forEach(btn=>{
-            btn.addEventListener('click',()=>{
-            
-            let messageOne=`${btn.parentNode.children.item(1).innerHTML}
-            <span style="color: red;">Agregado al carrito!</span>`;
-            let messageTwo=`<span style="color: red;">Otro:
-            </span>${btn.parentNode.children.item(1).innerHTML}
-            <span style="color: red;">Agregado!</span>`;
-
-                const btnValue=parseInt(btn.getAttribute("value"));
-
-                let cartCard=document.getElementById(`quantity${btnValue}`);
-
-                
-                !JSON.parse(localStorage.getItem('products')).some(p=>p.id==btnValue)?
-                (
-                cartClass.addToCart(btnValue,products,messageOne)
-                )
-                :(cartClass.toAddCounter(btnValue,messageTwo),
-                cartClass.toReloadCounterProduct(cartCard,btnValue)
-                )
-                cartClass.toReloadProducts(cartClass.save(),cartContainer)
-                sumAndSubtractProduct(cartClass)  
-                cartClass.cartCounter(counterInfo)
-                deleteProduct(cartClass)
-                cartClass.save()
-                totalCartPrice()
-                
-            })
+            btn.addEventListener('click',e=>clickEventSumCard(e,products))
         })
-        sumAndSubtractProduct(cartClass)
-        openCloseCart(cartClass)
-        deleteProduct(cartClass)
+        sumAndSubtractProduct()
+        openCloseCart()
+        deleteProduct()
 }
 
-let openCloseCart=(cartClass)=>{
+const clickEventSumCard=(e,products)=>{
+    const messageOne=`${e.target.parentNode.children.item(1).innerHTML}
+    <span style="color: red;">Agregado al carrito!</span>`;
+    const messageTwo=`<span style="color: red;">Otro:
+    </span>${e.target.parentNode.children.item(1).innerHTML}
+    <span style="color: red;">Agregado!</span>`;
+    const messageStockLimit=`<span style="color: red;">Sin stock!!!`;
+
+        const btnValue=parseInt(e.target.value);
+
+        const cartCard=document.getElementById(`quantity${btnValue}`);
+        
+        !JSON.parse(localStorage.getItem('products')).some(p=>p.id==btnValue)?
+        (
+        cartClass.addToCart(btnValue,products,messageOne)
+        )
+        :(cartClass.toAddCounter(btnValue,messageTwo,messageStockLimit),
+        cartClass.toReloadCounterProduct(cartCard,btnValue)
+        )
+        cartClass.toReloadProducts(cartClass.save(),cartContainer)
+        sumAndSubtractProduct()  
+        cartClass.cartCounter(counterInfo)
+        deleteProduct()
+        cartClass.save()
+        totalCartPrice()  
+    }
+
+const openCloseCart=()=>{
     btnCart.addEventListener('click',()=>{
         cartClass.toShowCart(cartStyle)
 
@@ -138,55 +134,66 @@ let openCloseCart=(cartClass)=>{
     })
 }
 
-let sumAndSubtractProduct=()=>{
+const sumAndSubtractProduct=()=>{
     //! subtract and sum
-    let sumBtn=document.querySelectorAll('.btn-sum');
-    let subtractBtn=document.querySelectorAll('.btn-subtraction'); 
+    const sumBtn=document.querySelectorAll('.btn-sum');
+    const subtractBtn=document.querySelectorAll('.btn-subtraction'); 
 
-    
     subtractBtn.forEach(btn=>{
 
-        btn.addEventListener('click',()=>{
-            let btnValue=parseInt(btn.getAttribute("value"));
-            let cartCard=document.getElementById(`quantity${btnValue}`)
-            cartClass.toSubtractCounter(btnValue)
-
-            cartClass.toReloadCounterProduct(cartCard,btnValue)
-            cartClass.save()
-            totalCartPrice()
-        })
+        btn.addEventListener('click',subtractClickEvent)
     })
     sumBtn.forEach(btn=>{
 
-        btn.addEventListener('click',()=>{
-            let btnValue=parseInt(btn.getAttribute("value"));
-            let message=`<span style="color: red;">Otro:
-            </span>${btn.parentNode.children.item(1).innerHTML}
-            <span style="color: red;">Agregado!</span>`;
-            let cartCard=document.getElementById(`quantity${btnValue}`)
-            cartClass.toAddCounter(btnValue,message)
-
-            cartClass.toReloadCounterProduct(cartCard,btnValue)
-            cartClass.save()
-            totalCartPrice()
-        })
+        btn.addEventListener('click',sumClickEvent)
     })
 }
 
-const deleteProduct=(cartClass)=>{
+const subtractClickEvent=(e)=>{
+    const btnValue=parseInt(e.target.value);
+    const message=`<span style="color: red;">Quitaste un:
+    </span>${e.target.parentNode.children.item(1).innerHTML}`;
+    const cartCard=document.getElementById(`quantity${btnValue}`)
+    cartClass.toSubtractCounter(btnValue,message)
+
+    cartClass.toReloadCounterProduct(cartCard,btnValue)
+    cartClass.save()
+    totalCartPrice()
+}
+
+const sumClickEvent=(e)=>{
+    const btnValue=parseInt(e.target.value);
+    const message=`<span style="color: red;">Otro:
+    </span>${e.target.parentNode.children.item(1).innerHTML}
+    <span style="color: red;">Agregado!</span>`;
+    const messageTwo=`<span style="color: red;">Sin stock!!!:
+    </span>`;
+    const cartCard=document.getElementById(`quantity${btnValue}`)
+    cartClass.toAddCounter(btnValue,message,messageTwo)
+
+    cartClass.toReloadCounterProduct(cartCard,btnValue)
+    cartClass.save()
+    totalCartPrice()
+}
+
+const deleteProduct=()=>{
     const btnDelete=document.querySelectorAll('.btn-delete');
     btnDelete.forEach((btn)=>{
-    btn.addEventListener('click',()=>{  
-        const btnValue=parseInt(btn.getAttribute('value'))
-        const cartCard=document.getElementById(`product${btnValue}`)
-
-
-        cartClass.toDeleteCart(btnValue,cartCard)
-        cartClass.cartCounter(counterInfo)
-        cartClass.save()
-        totalCartPrice()
+    btn.addEventListener('click',deleteClickEvent)
     })
-    })
+}
+
+const deleteClickEvent=(e)=>{  
+    const btnValue=parseInt(e.target.value)
+    let message=`<span style="color: red;">Eliminaste:
+        </span>${e.target.parentNode.children.item(1).innerHTML}
+        <span style="color: red;">de tu carrito</span>`;
+    const cartCard=document.getElementById(`product${btnValue}`)
+
+    cartClass.toDeleteCart(btnValue,cartCard,message)
+    cartClass.cartCounter(counterInfo)
+    cartClass.save()
+    totalCartPrice()
 }
 
 const totalCartPrice=()=>{
