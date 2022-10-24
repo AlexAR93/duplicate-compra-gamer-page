@@ -151,7 +151,7 @@ let sumAndSubtractProduct=()=>{
             let cartCard=document.getElementById(`quantity${btnValue}`)
             cartClass.toSubtractCounter(btnValue)
 
-            cartClass.toReloadCounterProduct(cartCard,message)
+            cartClass.toReloadCounterProduct(cartCard,btnValue)
             cartClass.save()
             totalCartPrice()
         })
