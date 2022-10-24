@@ -10,10 +10,9 @@ let cartContainer=document.getElementById('cart-container');
 let inLocalStorage=JSON.parse(localStorage.getItem('products'));
 let divTotalPrice=document.querySelector('#cart-total-price > p')
 class Cart{
-    constructor(counter) {
+    constructor() {
         this.object;
         this.productsInLocal=!inLocalStorage?[]:[...JSON.parse(localStorage.getItem('products'))];
-        this.counter=counter+1;
         this.totalPrice=0;
     }   
     save(){
@@ -31,10 +30,10 @@ class Cart{
         return cartStyle.classList.add('hide-cart')
 
     }
-    addToCart(btnValue,object){
+    addToCart(btnValue,object,message){
         this.productsInLocal.push(structuredClone(object.find(p=>p.id==btnValue)))
         this.productsInLocal.find(p=>p.id==btnValue&&(p.quantity=1,p.lot=p.lot-1))
-  
+        buyAlert(message)
         return this.productsInLocal
     }
     toReloadProducts(productsInCart,cartContainer){
@@ -65,29 +64,13 @@ class Cart{
         this.productsInLocal.find(p=>p.id==btnValue&&(p.quantity-=1,p.lot=p.lot+1))
         return this.productsInLocal
     }
-    toAddCounter(btnValue){
+    toAddCounter(btnValue,message){
         let lot=this.productsInLocal.find(p=>p.id==btnValue);
-        lot.lot>0?
-        this.productsInLocal.find(p=>p.id==btnValue&&(p.quantity+=1,p.lot=p.lot-1)):alert('Sin stock!!!')
+        lot.lot>0?(
+        this.productsInLocal.find(p=>p.id==btnValue&&(p.quantity+=1,p.lot=p.lot-1)),
+        buyAlert(message)
+        ):alert('Sin stock!!!')
         return this.productsInLocal
-    }
-    buyAlert(message){
-        const Toast = Swal.mixin({
-            toast: true,
-            position: 'top-end',
-            showConfirmButton: false,
-            timer: 2000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-              toast.addEventListener('mouseenter', Swal.stopTimer)
-              toast.addEventListener('mouseleave', Swal.resumeTimer)
-            }
-          })
-        
-          Toast.fire({
-            icon: 'success',
-            title: `${message}`
-          })
     }
     toReloadCounterProduct(cardCounter,btnValue){
         cardCounter.innerHTML=this.productsInLocal.find(p=>p.id==btnValue).quantity;
@@ -102,7 +85,7 @@ class Cart{
     }
 }
 
-const cartClass=new Cart(0)
+const cartClass=new Cart()
 
 const cart=(products=inLocalStorage)=>{
         let cardButtons=document.querySelectorAll('.btn-add');
@@ -126,12 +109,10 @@ const cart=(products=inLocalStorage)=>{
                 
                 !JSON.parse(localStorage.getItem('products')).some(p=>p.id==btnValue)?
                 (
-                cartClass.addToCart(btnValue,products),
-                cartClass.buyAlert(messageOne)  
+                cartClass.addToCart(btnValue,products,messageOne)
                 )
-                :(cartClass.toAddCounter(btnValue),
-                cartClass.toReloadCounterProduct(cartCard,btnValue),
-                cartClass.buyAlert(messageTwo)
+                :(cartClass.toAddCounter(btnValue,messageTwo),
+                cartClass.toReloadCounterProduct(cartCard,btnValue)
                 )
                 cartClass.toReloadProducts(cartClass.save(),cartContainer)
                 sumAndSubtractProduct(cartClass)  
@@ -205,6 +186,25 @@ const deleteProduct=(cartClass)=>{
 
 const totalCartPrice=()=>{
     divTotalPrice.innerHTML=cartClass.toSumPrice()
+}
+
+const buyAlert=(message)=>{
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+      })
+    
+      Toast.fire({
+        icon: 'success',
+        title: `${message}`
+      })
 }
 
 export{
