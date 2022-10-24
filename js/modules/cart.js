@@ -142,6 +142,8 @@ let sumAndSubtractProduct=()=>{
     //! subtract and sum
     let sumBtn=document.querySelectorAll('.btn-sum');
     let subtractBtn=document.querySelectorAll('.btn-subtraction'); 
+
+    
     subtractBtn.forEach(btn=>{
 
         btn.addEventListener('click',()=>{
@@ -149,7 +151,7 @@ let sumAndSubtractProduct=()=>{
             let cartCard=document.getElementById(`quantity${btnValue}`)
             cartClass.toSubtractCounter(btnValue)
 
-            cartClass.toReloadCounterProduct(cartCard,btnValue)
+            cartClass.toReloadCounterProduct(cartCard,message)
             cartClass.save()
             totalCartPrice()
         })
@@ -158,8 +160,11 @@ let sumAndSubtractProduct=()=>{
 
         btn.addEventListener('click',()=>{
             let btnValue=parseInt(btn.getAttribute("value"));
+            let message=`<span style="color: red;">Otro:
+            </span>${btn.parentNode.children.item(1).innerHTML}
+            <span style="color: red;">Agregado!</span>`;
             let cartCard=document.getElementById(`quantity${btnValue}`)
-            cartClass.toAddCounter(btnValue)
+            cartClass.toAddCounter(btnValue,message)
 
             cartClass.toReloadCounterProduct(cartCard,btnValue)
             cartClass.save()
