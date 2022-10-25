@@ -155,7 +155,7 @@
                     }
                     button{
                         border: none;
-                        background: #FD611A;
+                        background: $backgroundPrimary;
                         color: #FFFFFF;
                         padding: 10.5px 16px;
                         border-radius: 6px;
@@ -171,13 +171,13 @@
 
                 p{
                     padding: .5rem;
-                    background: #FD611A;
+                    background: $backgroundPrimary;
                     width: fit-content;
                     border-radius: 20px;
                     cursor: pointer;
                     span{
                         font-size: 1.1rem;
-                        color: #FD611A;
+                        color: $backgroundPrimary;
                         background: #EEEEEE;
                         border-radius: 10px;
                         padding: 0 6px 3px 6px;

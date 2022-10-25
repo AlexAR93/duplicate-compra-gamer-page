@@ -31,7 +31,7 @@
         padding: 8px 0 0 0;
         button{
             border: none;
-            background: #fd611a;
+            background: $backgroundPrimary;
             color: #fff;
             height: 36px;
             width: 173.95px;
@@ -47,7 +47,7 @@
                 border-radius: 100%;
                 padding: 4px 6px;
                 i{
-                    color: #fd611a;
+                    color: $backgroundPrimary;
                 }
             }
         }
@@ -154,7 +154,7 @@
         }
     }
     .nav{
-        background: #fd611a;
+        background: $backgroundPrimary;
         height: 56px;
         width: 100%;
         @include flex(column,start,center);
@@ -167,7 +167,7 @@
         &__links{
             // display: none;
             width: inherit;
-            background: #fd611a;
+            background: $backgroundPrimary;
             position: absolute;
             top: 261px;
             padding: 0 42px;

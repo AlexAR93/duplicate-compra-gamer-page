@@ -61,7 +61,7 @@
 }
 .header__user button {
   border: none;
-  background: #fd611a;
+  background: #FD611A;
   color: #fff;
   height: 36px;
   width: 173.95px;
@@ -79,7 +79,7 @@
   padding: 4px 6px;
 }
 .header__user button span i {
-  color: #fd611a;
+  color: #FD611A;
 }
 .header__user button:active {
   box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
@@ -185,7 +185,7 @@
   transform: translateX(-100%);
 }
 .header .nav {
-  background: #fd611a;
+  background: #FD611A;
   height: 56px;
   width: 100%;
   display: flex;
@@ -201,7 +201,7 @@
 }
 .header .nav__links {
   width: inherit;
-  background: #fd611a;
+  background: #FD611A;
   position: absolute;
   top: 261px;
   padding: 0 42px;
@@ -328,12 +328,12 @@
   background: #fff;
   border-radius: 100%;
   padding: 0.4rem 0.1rem;
-  color: #FC611A;
+  color: #FD611A;
   font-size: 1.2rem;
 }
 .footer__social-networks div .facebook {
   padding: 0;
-  background: #FC611A;
+  background: #FD611A;
   color: #fff;
   font-size: 2rem;
 }

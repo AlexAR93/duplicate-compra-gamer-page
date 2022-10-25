@@ -11,7 +11,7 @@
         
     }
     &__section{
-        background: #FD611A;
+        background: $backgroundPrimary;
         text-align: center;
         padding: 0 20px;
         @include flex(column, center,center);
@@ -23,7 +23,7 @@
         }
         button:hover{
             background: #fff;
-            color: #FD611A;
+            color: $backgroundPrimary;
         }
     }
     &__data-fiscal{
@@ -94,12 +94,12 @@
                 background: #fff;
                 border-radius: 100%;
                 padding: .4rem .1rem;
-                color: #FC611A;
+                color: $backgroundPrimary;
                 font-size: 1.2rem;
             }
             .facebook{
                 padding: 0;
-                background: #FC611A;
+                background: $backgroundPrimary;
                 color: #fff;
                 font-size: 2rem;
             }
