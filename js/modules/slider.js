@@ -1,5 +1,5 @@
 
-let slickDots=document.getElementById('slick-dots');
+const slickDots=document.getElementById('slick-dots');
 
 const divContainer=document.getElementById('slider__container')
 export default function slider(images){

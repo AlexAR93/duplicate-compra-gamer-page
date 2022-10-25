@@ -64,10 +64,10 @@ const groupFunctions=(products,cart)=>{
 }
 
 const productFunction=(productClass,cart)=>{
-    renderDom(productClass.getProducts(),cart) 
+    renderProducts(productClass.getProducts(),cart) 
     btnFilters(productClass,cart)
 }
-const renderDom=(products,cart)=>{ 
+const renderProducts=(products,cart)=>{ 
     productsContainer.innerHTML='';
     tag.innerHTML.length>=1&&productsContainer.appendChild(tagContainer)
     products.forEach((product)=>{
@@ -108,7 +108,7 @@ const filterClickEvent=(e,products,cart)=>{
     const spanTag=document.createElement('span');
     spanTag.innerHTML='x'
     tag.appendChild(spanTag)
-    renderDom(products.getByCategory(e.target.innerHTML),cart)
+    renderProducts(products.getByCategory(e.target.innerHTML),cart)
     selectOptionsFilter(products,cart,products.getByCategory(e.target.innerHTML))
 }
 
@@ -120,14 +120,14 @@ const btnCategoriesShow=()=>{
 const clearFilter=(products,cart)=>{
     tag.addEventListener('click',()=>{
         tag.innerHTML='';
-        renderDom(products.getProducts(),cart)
+        renderProducts(products.getProducts(),cart)
         selectOptionsFilter(products,cart,products.getProducts())
     })
 }
 // /*---------------------------Filter by price---------------------------*/
 const selectOptionsFilter=(products,cart,viewProducts)=>(
     selectOption.forEach((option)=>
-        option.addEventListener('click',()=>renderDom(products.getByOrder(option.value,viewProducts),cart))
+        option.addEventListener('click',()=>renderProducts(products.getByOrder(option.value,viewProducts),cart))
     )
 )
 

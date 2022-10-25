@@ -8,7 +8,6 @@ const inLocalStorage=JSON.parse(localStorage.getItem('products'));
 const divTotalPrice=document.querySelector('#cart-total-price > p')
 class Cart{
     constructor() {
-        this.object;
         this.productsInLocal=!inLocalStorage?[]:[...JSON.parse(localStorage.getItem('products'))];
         this.totalPrice;
     }   

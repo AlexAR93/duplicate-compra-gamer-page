@@ -14,24 +14,25 @@ export default function sliderFunction(){
 //*ForEach para controlar cada boton
     button.forEach((b,index)=>{
         //!Ir a imagen de X posición al hacer click en su determinado boton, dando un STOP al slider
-        b.addEventListener('click',()=>{
-                        
-            //*Detener el slider automatico
-            intervalo.stopInterval()
-            
-            divContainer.style.transform=`translateX(-${index}00%)`;
-
-            //*Remover el estilo css btn Active de todo los botones
-            button.forEach((b,index)=>{
-                button[index].classList.remove('btnActive')
-            })
-
-            //*Añadir el estilo btnActive solo al boton con X index
-            button[index].classList.add('btnActive')
-
-            intervalo.initInterval(index)
-        })
+        b.addEventListener('click',e=>btnClickEvent(e,index,button,intervalo))
     })
 }
 
+const btnClickEvent=(e,index,button,intervalo)=>{
+                        
+    //*Detener el slider automatico
+    intervalo.stopInterval()
+    
+    divContainer.style.transform=`translateX(-${index}00%)`;
+
+    //*Remover el estilo css btn Active de todo los botones
+    button.forEach((b,index)=>{
+        button[index].classList.remove('btnActive')
+    })
+
+    //*Añadir el estilo btnActive solo al boton con X index
+    button[index].classList.add('btnActive')
+
+    intervalo.initInterval(index)
+}
 

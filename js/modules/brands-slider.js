@@ -8,7 +8,7 @@ const brandsSlider=async()=>{
     const productsDate=await fetch(url);
     const products=await productsDate.json();  
 
-    products.brands.forEach((b,i)=>{
+    products.brands.forEach((b)=>{
         const divContent=document.createElement('div');
         const imgChild=document.createElement('img');
    
