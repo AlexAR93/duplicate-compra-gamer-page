@@ -10,8 +10,6 @@ var swiper = new Swiper('.swiper-container', {
 	  el: '.swiper-pagination',
 	  clickable: true,
 	},
-
-  
 	breakpoints: {
 	  0: {
 		slidesPerView: 1,

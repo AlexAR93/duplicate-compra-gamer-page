@@ -1,27 +1,31 @@
 
 //Crear elemento Tag para cuando utilice el filtro
-let productsContainer=document.getElementById('products');
-let btns=document.querySelectorAll('.btn');   
-let selectOption=document.querySelectorAll('.select-option');
-let btnCategoriesOpen=document.getElementById('categories');
-let btnCategoriesClose=document.getElementById('tittle-options-close');
-let btnOptions=document.getElementById('options');
-let tagContainer=document.createElement('div');
-let tag=document.createElement('p');
+const productsContainer=document.getElementById('products');
+const btns=document.querySelectorAll('.btn');   
+const selectOption=document.querySelectorAll('.select-option');
+const btnCategoriesOpen=document.getElementById('categories');
+const btnCategoriesClose=document.getElementById('tittle-options-close');
+const btnOptions=document.getElementById('options');
+const tagContainer=document.createElement('div');
+const tag=document.createElement('p');
 tagContainer.appendChild(tag);
 tagContainer.classList.add('products__tag');
-
 
 class ProductsInDom{
     constructor(products) {
         this.products=products;
     }   
 
+    getProducts(){
+        return this.products
+    }
     getByCategory(category){
+     
         return this.products.filter(p=>p.category==category)
     }
-    getByOrder(order){
-        return this.products.sort(function(a,b){
+    getByOrder(order,object){
+        const newArray=object;
+        return newArray.sort(function(a,b){
                 
             if(a.price==b.price){
                 return 0
@@ -60,7 +64,7 @@ const groupFunctions=(products,cart)=>{
 }
 
 const productFunction=(productClass,cart)=>{
-    renderDom(productClass.getByOrder(0),cart) 
+    renderDom(productClass.getProducts(),cart) 
     btnFilters(productClass,cart)
 }
 const renderDom=(products,cart)=>{ 
@@ -91,10 +95,11 @@ const btnFilter=(products,cart)=>{
     btns.forEach((btn)=>{
         btn.addEventListener('click',e=>filterClickEvent(e,products,cart))
     })
-    clearFilter(products.getByOrder(0),cart)
+    clearFilter(products,cart)
         //Filtro por precio
     //!Funcion del select filter para ordenar por precio
-    selectOptionsFilter(products,cart)
+    selectOptionsFilter(products,cart,products.getProducts())
+    
 }
 
 const filterClickEvent=(e,products,cart)=>{           
@@ -104,6 +109,7 @@ const filterClickEvent=(e,products,cart)=>{
     spanTag.innerHTML='x'
     tag.appendChild(spanTag)
     renderDom(products.getByCategory(e.target.innerHTML),cart)
+    selectOptionsFilter(products,cart,products.getByCategory(e.target.innerHTML))
 }
 
 const btnCategoriesShow=()=>{
@@ -114,13 +120,14 @@ const btnCategoriesShow=()=>{
 const clearFilter=(products,cart)=>{
     tag.addEventListener('click',()=>{
         tag.innerHTML='';
-        renderDom(products,cart)
+        renderDom(products.getProducts(),cart)
+        selectOptionsFilter(products,cart,products.getProducts())
     })
 }
 // /*---------------------------Filter by price---------------------------*/
-const selectOptionsFilter=(products,cart)=>(
+const selectOptionsFilter=(products,cart,viewProducts)=>(
     selectOption.forEach((option)=>
-        option.addEventListener('click',()=>renderDom(products.getByOrder(option.value),cart))
+        option.addEventListener('click',()=>renderDom(products.getByOrder(option.value,viewProducts),cart))
     )
 )
 

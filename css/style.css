@@ -387,6 +387,10 @@
   width: 100%;
   border-bottom: 2.5px #4E4D4D solid;
 }
+.main .latest-new-products .swiper-container .swiper-wrapper {
+  justify-content: start;
+  flex-direction: row-reverse;
+}
 .main .latest-new-products .swiper-container .swiper-wrapper .swiper-slide {
   text-align: center;
   border-radius: 6px;

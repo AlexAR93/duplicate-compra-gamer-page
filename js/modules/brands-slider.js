@@ -1,14 +1,20 @@
 'use strict'
 
-import {brands} from './data.js';
 const brandsSliderContainer=document.getElementById('brands-slider')
 
-export default brands.forEach((b,i)=>{
-        let divContent=document.createElement('div');
-        let imgChild=document.createElement('img');
+const brandsSlider=async()=>{
+
+    const url="./products.json";
+    const productsDate=await fetch(url);
+    const products=await productsDate.json();  
+
+    products.brands.forEach((b,i)=>{
+        const divContent=document.createElement('div');
+        const imgChild=document.createElement('img');
    
         imgChild.setAttribute('src',`${b.brand}`)
         divContent.appendChild(imgChild);
         brandsSliderContainer.appendChild(divContent)
     })
-
+}
+export default brandsSlider()

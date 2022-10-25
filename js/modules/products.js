@@ -3,11 +3,11 @@
 import {groupFunctions} from './products-functions.js';
 import {cart} from './cart.js'
 
-let products=async()=>{
-    let url="./js/modules/products.json";
-    let productsDate=await fetch(url);
-    let products=await productsDate.json();
-    groupFunctions(products,cart)
+const products=async()=>{
+    const url="./products.json";
+    const productsDate=await fetch(url);
+    const products=await productsDate.json();
+    groupFunctions(products.products,cart)
     return products
 }
 products()
