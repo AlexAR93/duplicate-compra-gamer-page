@@ -78,16 +78,17 @@
             .cart-style{
                 position: absolute;
                 width: 100%;
-                min-height: 100vh;
+                min-height: 100%;
                 top: 0%;
                 left: 0;
                 @include flex(column,center,center);
                 cursor: auto;
                 z-index: 99;
-                background: #f2f2f2d0;
+                background: #9c9352;
                 transform: translate(0%);
                 transition: all 1s;
                 .cart-tittle{
+                    color: #fff;
                     font-weight: 400;
                     text-shadow: 2px 2px 3px #5e5e5e;
                     margin: 3.5rem 0 1.5rem 0;
@@ -143,9 +144,16 @@
                         transform: scale(1.03);
                         transition: all .5s;
                     }
+                    
                 }
                 .cart-open{
-                    margin-top: .3rem;
+                    margin: .5rem 0 2rem 0;
+                }
+                .cart-total-price{
+                    margin: 1rem 0;
+                    p{
+                        color: #fff;
+                    }
                 }
             }
             .hide-cart{

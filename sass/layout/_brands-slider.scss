@@ -1,4 +1,13 @@
-.brands-slider{
-    @include flex(row,center,start);
-    overflow-x: hidden;
+.brands{
+    width: inherit;
+    overflow: hidden;
+	&__slider{
+        @include flex(row,center,start);
+        width: fit-content;
+        div{
+            width: 150px;
+        }
+      
+    }
 }
+

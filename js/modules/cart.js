@@ -196,7 +196,7 @@ const deleteClickEvent=(e)=>{
 }
 
 const totalCartPrice=()=>{
-    divTotalPrice.innerHTML=cartClass.toSumPrice()
+    divTotalPrice.innerHTML=`Total: $${cartClass.toSumPrice()}`
 }
 
 const buyAlert=(message)=>{
