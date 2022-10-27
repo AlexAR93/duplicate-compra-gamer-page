@@ -1,11 +1,15 @@
 .brands{
     width: inherit;
-    overflow: hidden;
 	&__slider{
         @include flex(row,center,start);
-        width: fit-content;
+        width: 100%;
+        margin-left: -22%;
         div{
-            width: 150px;
+            min-width: 22%;
+            img{
+                max-width: 90%;
+              
+            }
         }
       
     }

@@ -5,7 +5,7 @@ export default function sliderFunction(){
 //*Seleccionar todos los botones creados del DOM
     const button=document.querySelectorAll('#slick-dots > a > button')
 //*Clase del intervalo del slider automatico para reutilizar luego
-    const intervalo=new SliderInterval(divContainer,button);
+    const intervalo=new SliderInterval(divContainer,button,);
 //*Asignando estilo css btnActive al primer elemento 
     button[0].classList.add('btnActive');
     //!Empezar Slider

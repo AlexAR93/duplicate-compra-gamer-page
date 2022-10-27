@@ -239,17 +239,20 @@
 
 .brands {
   width: inherit;
-  overflow: hidden;
 }
 .brands__slider {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: start;
-  width: fit-content;
+  width: 100%;
+  margin-left: -22%;
 }
 .brands__slider div {
-  width: 150px;
+  min-width: 22%;
+}
+.brands__slider div img {
+  max-width: 90%;
 }
 
 .footer .container {
@@ -352,6 +355,9 @@
   font-size: 2rem;
 }
 
+.main {
+  overflow: hidden;
+}
 .main .slider {
   width: 100%;
   overflow: hidden;
@@ -433,6 +439,9 @@
   display: none;
 }
 
+.main {
+  overflow: hidden;
+}
 .main .main-products {
   padding: 0 10%;
   display: flex;
