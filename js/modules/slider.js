@@ -1,4 +1,4 @@
-
+'use strict'
 const slickDots=document.getElementById('slick-dots');
 
 const divContainer=document.getElementById('slider__container')
@@ -8,7 +8,7 @@ export default function slider(images){
         const img=document.createElement('img');
 
         div.classList.add('slider__img');
-        div.setAttribute('id',`${index}`);
+        div.setAttribute('value',`${index}`);
         let size=window.innerWidth;
         let num;
 

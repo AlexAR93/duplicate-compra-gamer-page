@@ -1,4 +1,4 @@
-// ! Aquiiiii
+'use strict'
 export default class SliderInterval{
     constructor(divContent,button){
         this.button=button,

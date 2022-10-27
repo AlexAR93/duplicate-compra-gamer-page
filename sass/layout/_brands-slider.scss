@@ -3,11 +3,12 @@
 	&__slider{
         @include flex(row,center,start);
         width: 100%;
-        margin-left: -22%;
+        margin-left: -25%;
         div{
-            min-width: 22%;
+            min-width: 25%;
+            text-align: center;
             img{
-                max-width: 90%;
+                max-width: 100%;
               
             }
         }

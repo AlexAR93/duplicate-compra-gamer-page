@@ -1,0 +1,55 @@
+@media (min-width:571px) {
+    .footer{
+        .container{
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            height: fit-content;
+        }
+        &__section{
+            margin: 0;
+            padding: 2rem .5rem;
+            @include flex(column,center,center);
+        }
+        &__social-networks{
+            h3{
+                align-self: center;
+            }
+        }
+    }
+}
+
+@media (min-width:768px) {
+    .header{
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 15px;
+        .nav{
+            &__button{
+               display: none;
+            }
+            &__links{
+                position: static;
+                display: flex !important;
+                @include flex(row,center,space-between);
+                background: none;
+                padding: 0 15%; 
+                z-index: 500;
+                li{
+                    i{
+                        display: none;
+                    }
+                }
+            }
+        }
+    }
+    .brands{
+        &__slider{
+            margin-left: -20%;
+            div{
+                min-width: 20%;
+            }
+          
+        }
+    }
+    
+    
+}

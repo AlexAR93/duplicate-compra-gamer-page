@@ -1,7 +1,7 @@
 'use strict'
 const counterInfo=document.getElementById('counter')
 const btnCart=document.getElementById('cart-btn');
-const btnClose=document.getElementById('cart-open');
+const btnClose=document.getElementById('cart-close');
 const cartStyle=document.getElementById('cart-style');
 const cartContainer=document.getElementById('cart-container');
 const inLocalStorage=JSON.parse(localStorage.getItem('products'));
