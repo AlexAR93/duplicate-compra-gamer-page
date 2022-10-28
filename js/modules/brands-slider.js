@@ -28,7 +28,7 @@ const brandsAutoScroll=()=>{
     start()
     interval=setInterval(() => {
         next(widthPorcentage,"%")
-    }, 3000);
+    }, 2500);
     let widthElement=brandsSliderContainer.childNodes[2].clientWidth;
     let widthPorcentage=(widthElement*100)/window.innerWidth;
 
@@ -40,7 +40,7 @@ const brandsAutoScroll=()=>{
         clearInterval(interval)
         interval=setInterval(() => {
             next(widthPorcentage,"%")
-        }, 3000);
+        }, 2500);
     })
 }
 
